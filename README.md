@@ -4,3 +4,4 @@ An app that improves project management planning and increase efficiency and acc
 Creators:
 Nikki Tran
 Rebecca Reyes
+Jesse Tutor
