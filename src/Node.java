@@ -1,9 +1,10 @@
 public class Node
 {
-	Node next;
+	int duration;
+	int duplicate;
 	String name;
 	String dependency;
-	int duration;
+	Node next;
 	
 	public Node()
 	{
@@ -11,6 +12,7 @@ public class Node
 		name = null;
 		dependency = null;
 		duration = 0;
+		duplicate = 0;
 	}
 	
 	public Node(String name2, String dependency2, int duration2)
@@ -19,5 +21,6 @@ public class Node
 		name = name2;
 		dependency = dependency2;
 		duration = duration2;
+		duplicate = 0;
 	}
 }
