@@ -3,21 +3,15 @@ import javax.swing.*;
 import java.awt.*; 
 
 public class PATHFINDER extends JApplet {
-	public void init () {
-		Container content = getContentPane();
-		
-		Button addButton = new Button("Add");
-		Button restartButton = new Button("Restart");
-		Button calcButton = new Button("Calculate");
-		Button helpButton = new Button("?");
-		Button aboutButton = new Button("A");
-		
-		content.add(addButton);
-		content.add(restartButton);
-		content.add(calcButton);
-		content.add(helpButton);
-		content.add(aboutButton);
-	}
+		private final int WIDTH = 650;
+	  private final int HEIGHT = 340;
+
+	  public void init()
+	   {
+	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
+	       getContentPane().add(panel);
+	       setSize(WIDTH,HEIGHT);
+	   }
 	
 	public static void main (String []args) {
 		int duration = 0;
