@@ -78,11 +78,6 @@ public class ControlPanel extends JPanel {
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
 	}
-	
-	private JSplitPane JSPlitPane(int verticalSplit, JPanel topPanel2, JPanel bottomPanel2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	private class ButtonListener implements ActionListener {
 
