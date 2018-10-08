@@ -1,6 +1,6 @@
 import java.util.*;
 import javax.swing.*;
-import java.awt.*; 
+import java.awt.*;
 
 public class PATHFINDER extends JApplet {
 		private final int WIDTH = 650;
@@ -8,11 +8,11 @@ public class PATHFINDER extends JApplet {
 
 	  public void init()
 	   {
-	       //ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
-	       //getContentPane().add(panel);
+	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
+	       getContentPane().add(panel);
 	       setSize(WIDTH,HEIGHT);
-	   }
-	
+	  }
+
 	public static void main (String []args) {
 		int duration = 0;
 		int count = 0;
@@ -20,14 +20,14 @@ public class PATHFINDER extends JApplet {
 		String dependency = "";
 		char input;
 		LinkedList A = new LinkedList();
-		
+
 		Scanner reader = new Scanner(System.in);
-		
+
 		do {
 			printMenu();
 			input = reader.next().charAt(0);
 			reader.nextLine();
-			
+
 			switch(input){
 			case 'A':
 				System.out.print("Enter Activity Name: ");
@@ -68,7 +68,7 @@ public class PATHFINDER extends JApplet {
 			}
 		}while(input != 'Q');
 	}
-	
+
 	public static void printMenu () {
 		System.out.print("Choice\t\tAction\n" +
                 "------\t\t------\n" +
