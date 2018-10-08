@@ -8,7 +8,7 @@ public class LinkedList {
 	}
 	
 	public void add(String name, String dependency, int duration) {	//method to add a new node
-		if(head == null) {											//checks to see if the linked list is empty
+		if(head.name == null) {											//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
 		}
 		else {
@@ -20,42 +20,15 @@ public class LinkedList {
 		}
 	}
 	
-	public Node getStart() {
-		Node result = new Node();
+	public String getStart() {
+		String result = "";
 		Node temp = head;
 		while(temp != null) {
 			if(temp.dependency == null)
-				result = temp;
+				result = temp.name;
 			temp = temp.next;
 		}
 		return result;
-	}
-	
-	public void delete(String name)				//method to delete a node
-	{
-		if(exists(name) || head != null)		//checks to see if the name exists in the linked list
-		{
-			if(head.name == name)				//if the head contains the specified name
-				head = head.next;				//move the head to the next, therefor deleting it
-			else
-			{
-				Node temp = new Node();			//creates a temporary Node that is equal to the head
-				Node nxt = head.next;			//creates another temporary Node that is equal to the next of the head
-				while(nxt.next != null)			//goes through the linked list as long as the next Node is not null
-				{
-					if(nxt.name == name)		//if the name at that Node is equal to the name we are looking for
-					{
-						temp = nxt.next;		//make the previous Node equal to the next of the Node we are deleting
-					}
-					nxt = nxt.next;
-				}
-			}
-		}
-		else if(exists(name) == false) {		//error case: the name does not exists
-			System.out.println("Invalid Activity Name. Please try again");	//lets the user know it doesn't exist
-		}
-		else	//error case: the network diagram is empty
-			System.out.println("Please add an activity to your network diagram before attempting to delete");	//lets the user know they need to add before trying to delete	
 	}
 	
 	public boolean exists(String name) {	//method to see if the name exists in the linked list
@@ -69,14 +42,14 @@ public class LinkedList {
 		return exists;					//returns the result
 	}
 	
-	public Node getNext(Node nw) {
-		Node result = new Node();
+	public String getNext(String nw) {
+		String result = "";
 		Node temp = head;
-		while(temp != head) {
-			if(temp.dependency == nw.name && temp.duplicate != -1) {
+		while(temp != null) {
+			if(temp.dependency == nw && temp.duplicate != -1) {
 				if(temp.duplicate == 1)
 					temp.duplicate = -1;
-				result = temp;
+				result = temp.name;
 			}
 			temp = temp.next;
 		}
@@ -102,5 +75,32 @@ public class LinkedList {
 	
 	public void deleteList() {
 		head = null;
+	}
+	
+	public String[][] calculate(String[][] myArray, int rows, int columns){
+		System.out.println("Hi");
+		for(int r = 0; r < rows; r++) {
+			for(int c = 0; c < columns; c++) {
+				if(c == 0) {
+					myArray[r][c] = getStart();
+					System.out.print(getStart());
+				}
+				else {
+					System.out.println("Hello");
+					myArray[r][c] = getNext(myArray[r][c-1]);
+				}
+			}
+		}
+		
+		System.out.println("Yo");
+		for(int r = 0; r < rows; r++) {
+			System.out.print("Hola");
+			for(int c = 0; c < columns; c++) {
+				System.out.print(myArray[r][c] + " ");
+				System.out.println("Hi");
+			}
+			System.out.println();
+		}
+		return myArray;
 	}
 }
