@@ -10,13 +10,16 @@ public class ControlPanel extends JPanel {
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, calcButton, helpButton, aboutButton;
 	private int width, height;
+	
 	ButtonListener buttonlistener = new ButtonListener();
 	
+	// constructor to configure panel
 	public ControlPanel(int width, int height) {
 		this.width = width;
 		this.height = height;
 		setLayout(new BorderLayout());
 		setBackground(Color.blue);
+		setPreferredSize(new Dimension(width,height));
 		
 		topPanel = new JPanel();
 		top1 = new JPanel();
@@ -40,40 +43,36 @@ public class ControlPanel extends JPanel {
 		helpButton = new JButton("?");
 		aboutButton = new JButton("A");
 		
-		topPanel.setLayout(new GridLayout(2,1));
-		top1.setLayout(new GridLayout(3,1));
-		top2.setLayout(new GridLayout(1,5));
 		activityPanel.setLayout(new GridLayout(1,2));
-		durationPanel.setLayout(new GridLayout(1,2));
-		dependancyPanel.setLayout(new GridLayout(1,2));
-		
 		activityPanel.add(activityLabel);
 		activityPanel.add(activityField);
 		
+		durationPanel.setLayout(new GridLayout(1,2));
 		durationPanel.add(durationLabel);
 		durationPanel.add(durationField);
 		
+		dependancyPanel.setLayout(new GridLayout(1,2));
 		dependancyPanel.add(dependancyLabel);
 		dependancyPanel.add(dependancyField);
 		
+		top1.setLayout(new GridLayout(3,1));
 		top1.add(activityPanel);
 		top1.add(durationPanel);
 		top1.add(dependancyPanel);
 		
+		top2.setLayout(new GridLayout(1,5));
 		top2.add(addButton);
 		top2.add(calcButton);
 		top2.add(restartButton);
 		top2.add(helpButton);
 		top2.add(aboutButton);
 		
+		topPanel.setLayout(new GridLayout(2,1));
 		topPanel.add(top1);
 		topPanel.add(top2);
-		
-		// TODO(Nikki): add about and help button + popup action message
 
 		JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
 		add(pane);
-		setPreferredSize(new Dimension(width,height));
 		
 		addButton.addActionListener(buttonlistener);
 		restartButton.addActionListener(buttonlistener);
@@ -118,7 +117,6 @@ public class ControlPanel extends JPanel {
 				// TODO
 			}
 			else if (event.getSource() == helpButton) {
-				// TODO
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
 						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
 						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “none”. \n" + 
@@ -131,7 +129,6 @@ public class ControlPanel extends JPanel {
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (event.getSource() == aboutButton) {
-				// TODO
 				String message = "The purpose of PATHFINDER is to improve project management \n"
 						+ "planning and increase efficiency and accuracy in project planning \n"
 						+ "delivery times. Users are able to log activities and expected \n"
