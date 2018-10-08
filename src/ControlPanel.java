@@ -16,6 +16,7 @@ public class ControlPanel extends JPanel {
 		this.width = width;
 		this.height = height;
 		setLayout(new BorderLayout());
+		setBackground(Color.blue);
 		
 		topPanel = new JPanel();
 		top1 = new JPanel();
@@ -77,6 +78,28 @@ public class ControlPanel extends JPanel {
 		calcButton.addActionListener(buttonlistener);
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
+		
+		activityField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				// variable = activityField.getText();
+			}
+		});
+		
+		durationField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				// variable = durationField.getText();
+			}
+		});
+		
+		dependancyField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				// variable = dependancyField.getText();
+			}
+		});
+		
 	}
 
 	private class ButtonListener implements ActionListener {
