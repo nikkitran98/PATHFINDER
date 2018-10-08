@@ -16,6 +16,7 @@ public class PATHFINDER extends JApplet {
 	public static void main (String []args) {
 		int duration = 0;
 		int count = 0;
+		int depCount=0;
 		String name = "";
 		String dependency = "";
 		char input;
@@ -35,10 +36,22 @@ public class PATHFINDER extends JApplet {
 				System.out.print("Enter Activity Duration: ");
 				duration = reader.nextInt();
 				reader.nextLine();
-				System.out.print("Enter Activity Dependency: ");
-				dependency = reader.nextLine();
-				A.add(name, dependency, duration);
-				A.getStart();
+				System.out.print("Enter Amount of Dependencies: ");
+				depCount=reader.nextInt();
+				reader.nextLine();
+				if (depCount==0){
+					dependency= "0";
+					A.add(name, dependency, duration);
+				}
+				else{
+					for(int i = 0;i<depCount;i++)
+					{
+						System.out.print("Enter Activity Dependency #" +(i+1)+ ": ");
+						dependency = reader.nextLine();
+						A.add(name, dependency, duration);
+					}
+				}
+				//A.getStart();
 				count++;
 				break;
 			case 'C':
@@ -56,6 +69,8 @@ public class PATHFINDER extends JApplet {
 				System.out.println("All paths have been deleted");
 				break;
 			case 'R':
+				A.findEnd();
+				A.print();
 				break;
 			case 'O':
 				break;
