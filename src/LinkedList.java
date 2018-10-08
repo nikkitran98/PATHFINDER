@@ -2,6 +2,7 @@
 
 public class LinkedList {
 	private Node head;		//creates a head of type Node
+	private int count;
 	
 	public LinkedList() {		//Default LinkedList constructor
 		head = new Node();	//creates a new node
@@ -18,6 +19,31 @@ public class LinkedList {
 			}
 			temp.next = new Node(name, dependency, duration);		//adds the Node to the end
 		}
+		count++;
+	}
+	
+	public String getStart() {
+		String result = "";
+		Node temp = head;
+		if(temp.next == null) {
+			result = head.name;
+		}
+		return result;
+	}
+	
+	public String getNext(String nw) {
+		String result = "";
+		Node temp = head;
+		while(temp != null) {
+			if((temp.dependency).equals(nw) && temp.duplicate != -1) {
+				if(temp.duplicate == 1) {
+					temp.duplicate = -1;
+				}
+				result = temp.name;
+			}
+			temp = temp.next;
+		}
+		return result;
 	}
 	
 	public boolean exists(String name) {	//method to see if the name exists in the linked list
@@ -53,8 +79,7 @@ public class LinkedList {
 	}
 	
 	public void calculate(String[][] myArray, int rows, int columns){
-		String end = getEnd(columns);
-		/*for(int r = 0; r < rows; r++) {
+		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
 					myArray[r][c] = this.getStart();
@@ -76,6 +101,48 @@ public class LinkedList {
 				System.out.print(myArray[r][c] + " ");
 			}
 			System.out.println();
-		}*/
+		}
+	}
+	public void findEnd(){
+		Node temp =head;
+		Node temp2=head.next;
+		for(int i =0;i<count;i++){
+			for(int j=0;j<count;j++){
+				if(temp2.dependency.equals(temp.name))//checks dependency versus name
+					break;
+				else if (temp2.name.equals(temp.name))// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
+				{
+					temp.end=1;
+			
+				}
+				else{
+				    if(temp2.next==null)
+				    	temp2=head;
+				    else
+				    	temp2=temp2.next;
+				}
+				
+			}
+			if(temp.next!=null)
+			temp=temp.next;
+			if(temp.next!=null)
+			temp2=temp.next;
+			
+		}
+		
+	}
+	public void print(){
+		Node temp=head;
+		while(temp!=null){
+			System.out.print(temp.name+"||");
+			temp=temp.next;
+		}
+		System.out.print("\n");
+		temp=head;
+		while(temp!=null){
+			System.out.print(temp.end+"||");
+			temp=temp.next;
+		}
+		System.out.print("\n");
 	}
 }
