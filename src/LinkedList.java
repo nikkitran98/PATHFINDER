@@ -20,22 +20,6 @@ public class LinkedList {
 		}
 	}
 	
-	public String getStart() {
-		String result = "";
-		Node temp = head;
-		while(temp != null) {
-			if(temp.dependency.equals("0"))
-				result = temp.name;
-			temp = temp.next;
-		}
-		return result;
-	}
-	
-	public void printStart()
-	{
-		
-	}
-	
 	public boolean exists(String name) {	//method to see if the name exists in the linked list
 		boolean exists = false;				//sets variable exists to false
 		Node temp = head;					//creates a temporary node that is equal to the head
@@ -47,21 +31,7 @@ public class LinkedList {
 		return exists;					//returns the result
 	}
 	
-	public String getNext(String nw) {
-		String result = "";
-		Node temp = head;
-		while(temp != null) {
-			if((temp.dependency).equals(nw) && temp.duplicate != -1) {
-				if(temp.duplicate == 1)
-					temp.duplicate = -1;
-				result = temp.name;
-			}
-			temp = temp.next;
-		}
-		return result;
-	}
-	
-	public void dupCount() {
+	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
 		Node temp = head;
 		Node ntemp = temp;
 		while(temp != null)
@@ -83,7 +53,8 @@ public class LinkedList {
 	}
 	
 	public void calculate(String[][] myArray, int rows, int columns){
-		for(int r = 0; r < rows; r++) {
+		String end = getEnd(columns);
+		/*for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
 					myArray[r][c] = this.getStart();
@@ -105,6 +76,6 @@ public class LinkedList {
 				System.out.print(myArray[r][c] + " ");
 			}
 			System.out.println();
-		}
+		}*/
 	}
 }
