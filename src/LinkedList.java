@@ -94,6 +94,12 @@ public class LinkedList {
 			}
 		}
 		
+		for(int r = 0; r < rows + 1; r++) {
+			if(myArray[r] == myArray[r+1]) {
+				myArray[r+1].equals(null);
+			}
+		}
+		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				System.out.print(myArray[r][c] + " ");
