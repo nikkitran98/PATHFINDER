@@ -6,12 +6,11 @@ public class PATHFINDER extends JApplet {
 		private final int WIDTH = 650;
 	  private final int HEIGHT = 340;
 
-	  public void init()
-	   {
+	  public void init() {
 	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
 	       getContentPane().add(panel);
 	       setSize(WIDTH,HEIGHT);
-	   }
+	  }
 	
 	public static void main (String []args) {
 		int duration = 0;
