@@ -23,10 +23,15 @@ public class LinkedList {
 	public String getStart() {
 		String result = "";
 		Node temp = head;
-		while(temp != null) {
-			if(temp.dependency == "0")
-				result = temp.name;
-			temp = temp.next;
+		if(temp.next == null) {
+			result = head.name;
+		}
+		else {
+			while(temp != null) {
+				if(temp.dependency == "0")
+					result = temp.name;
+				temp = temp.next;
+			}
 		}
 		return result;
 	}
@@ -82,7 +87,7 @@ public class LinkedList {
 		head = null;
 	}
 	
-	public String[][] calculate(String[][] myArray, int rows, int columns){
+	public void calculate(String[][] myArray, int rows, int columns){
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
@@ -94,21 +99,11 @@ public class LinkedList {
 			}
 		}
 		
-		/*for(int r = 0; r < rows; r++) {
-			System.out.print("Hola");
-			for(int c = 0; c < columns; c++) {
-				System.out.print(myArray[r][c] + " ");
-				System.out.print("Hi");
-			}
-			System.out.println();
-		}*/
-		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
-				System.out.print(myArray[r][c]);
+				System.out.print(myArray[r][c] + " ");
 			}
-			System.out.println("");
+			System.out.println();
 		}
-		return myArray;
 	}
 }

@@ -32,26 +32,23 @@ public class PATHFINDER extends JApplet {
 			case 'A':
 				System.out.print("Enter Activity Name: ");
 				name = reader.nextLine();
-				System.out.println("Enter Activity Duration: ");
+				System.out.print("Enter Activity Duration: ");
 				duration = reader.nextInt();
 				reader.nextLine();
-				System.out.println("Enter Activity Dependency: ");
+				System.out.print("Enter Activity Dependency: ");
 				dependency = reader.nextLine();
 				A.add(name, dependency, duration);
 				count++;
-				
-				System.out.println(A.getStart());
 				break;
 			case 'C':
 				A.dupCount();
 				String[][] myArray = new String[count][count];
 				for(int r = 0; r < count; r++) {
 					for(int c = 0; c < count; c++) {
-						myArray[r][c] = null;
+						myArray[r][c] = "0";
 					}
 				}
-				
-				myArray = A.calculate(myArray, count, count);
+				A.calculate(myArray, count, count);
 				break;
 			case 'D':
 				A.deleteList();
