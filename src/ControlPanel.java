@@ -42,7 +42,7 @@ public class ControlPanel extends JPanel {
 		
 		topPanel.setLayout(new GridLayout(2,1));
 		top1.setLayout(new GridLayout(3,1));
-		top2.setLayout(new GridLayout(1,3));
+		top2.setLayout(new GridLayout(1,5));
 		activityPanel.setLayout(new GridLayout(1,2));
 		durationPanel.setLayout(new GridLayout(1,2));
 		dependancyPanel.setLayout(new GridLayout(1,2));
@@ -63,6 +63,8 @@ public class ControlPanel extends JPanel {
 		top2.add(addButton);
 		top2.add(calcButton);
 		top2.add(restartButton);
+		top2.add(helpButton);
+		top2.add(aboutButton);
 		
 		topPanel.add(top1);
 		topPanel.add(top2);
@@ -117,9 +119,26 @@ public class ControlPanel extends JPanel {
 			}
 			else if (event.getSource() == helpButton) {
 				// TODO
+				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
+						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
+						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “none”. \n" + 
+						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
+						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 
+						"Calculate: Calculates the possibly paths and the time to complete the entire path. \n" + 
+						"Restart: Discards all of the previous paths, allowing you to start a new network diagram.\n" + 
+						"?: Help section; you are currently here\n" + 
+						"A: Defines the purpose of the program";
+				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (event.getSource() == aboutButton) {
 				// TODO
+				String message = "The purpose of PATHFINDER is to improve project management \n"
+						+ "planning and increase efficiency and accuracy in project planning \n"
+						+ "delivery times. Users are able to log activities and expected \n"
+						+ "completion times to find the most efficient path to project completion. \n"
+						+ "The system itself will take the user inputs, create a \n"
+						+ "network diagram to determine all the paths in the network. \n";
+				JOptionPane.showMessageDialog(null, message);
 			}
 			
 		}
