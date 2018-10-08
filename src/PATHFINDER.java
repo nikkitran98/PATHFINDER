@@ -38,6 +38,7 @@ public class PATHFINDER extends JApplet {
 				System.out.print("Enter Activity Dependency: ");
 				dependency = reader.nextLine();
 				A.add(name, dependency, duration);
+				A.getStart();
 				count++;
 				break;
 			case 'C':

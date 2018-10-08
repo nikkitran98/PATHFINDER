@@ -23,15 +23,10 @@ public class LinkedList {
 	public String getStart() {
 		String result = "";
 		Node temp = head;
-		if(temp.next == null) {
-			result = head.name;
-		}
-		else {
-			while(temp != null) {
-				if(temp.dependency == "0")
-					result = temp.name;
-				temp = temp.next;
-			}
+		while(temp != null) {
+			if(temp.dependency.equals("0"))
+				result = temp.name;
+			temp = temp.next;
 		}
 		return result;
 	}
@@ -45,8 +40,8 @@ public class LinkedList {
 		boolean exists = false;				//sets variable exists to false
 		Node temp = head;					//creates a temporary node that is equal to the head
 		while(temp.next != null) {			//traverses through the linked list
-			if(temp.name == name)		//if the name at that Node is equal to the specified name
-				exists = true;			//change exists to true
+			if((temp.name).equals(name))	//if the name at that Node is equal to the specified name
+				exists = true;				//change exists to true
 			temp = temp.next;
 		}
 		return exists;					//returns the result
@@ -56,7 +51,7 @@ public class LinkedList {
 		String result = "";
 		Node temp = head;
 		while(temp != null) {
-			if(temp.dependency == nw && temp.duplicate != -1) {
+			if((temp.dependency).equals(nw) && temp.duplicate != -1) {
 				if(temp.duplicate == 1)
 					temp.duplicate = -1;
 				result = temp.name;
@@ -73,7 +68,7 @@ public class LinkedList {
 		{
 			while(ntemp!= null)
 			{
-				if(temp.dependency == ntemp.dependency) {
+				if((temp.dependency).equals(ntemp.dependency)) {
 					temp.duplicate = 1;
 					ntemp.duplicate = 1;
 				}
