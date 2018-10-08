@@ -8,14 +8,15 @@ public class PATHFINDER extends JApplet {
 
 	  public void init()
 	   {
-	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
-	       getContentPane().add(panel);
+	       //ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
+	       //getContentPane().add(panel);
 	       setSize(WIDTH,HEIGHT);
 	   }
 	
 	public static void main (String []args) {
 		int duration = 0;
 		int count = 0;
+		int rows = 0;
 		String name = "";
 		String dependency = "";
 		char input;
@@ -41,29 +42,18 @@ public class PATHFINDER extends JApplet {
 				count++;
 				break;
 			case 'C':
-				Node[][] myArray = new Node[count][count];
-				for(int r = 0; r < count; r++) {
+				A.dupCount();
+				String[][] myArray = new String[count][count];
+				for(int r = 0; r < rows; r++) {
 					for(int c = 0; c < count; c++) {
-						if(c == 0) {						//if you just started a new row
-							myArray[r][0] = A.getStart();
-						}
-						else {
-							myArray[r][c] = A.getNext(myArray[r][c-1]);
-						}
+						myArray[r][c] = null;
 					}
 				}
-				
-				for(int r = 0; r < count; r++) {
-					for(int c = 0; c < count; c++) {
-						System.out.print((myArray[r][c]).name + " ");
-					}
-					System.out.println();
-				}
+				myArray = A.calculate(myArray, count, count);
 				break;
-				//figure out a way to print it here
 			case 'D':
 				A.deleteList();
-				System.out.println("LinkedList has been deleted");
+				System.out.println("All paths have been deleted");
 				break;
 			case 'R':
 				break;
