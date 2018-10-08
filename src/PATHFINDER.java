@@ -16,7 +16,6 @@ public class PATHFINDER extends JApplet {
 	public static void main (String []args) {
 		int duration = 0;
 		int count = 0;
-		int rows = 0;
 		String name = "";
 		String dependency = "";
 		char input;
@@ -40,15 +39,18 @@ public class PATHFINDER extends JApplet {
 				dependency = reader.nextLine();
 				A.add(name, dependency, duration);
 				count++;
+				
+				System.out.println(A.getStart());
 				break;
 			case 'C':
 				A.dupCount();
 				String[][] myArray = new String[count][count];
-				for(int r = 0; r < rows; r++) {
+				for(int r = 0; r < count; r++) {
 					for(int c = 0; c < count; c++) {
 						myArray[r][c] = null;
 					}
 				}
+				
 				myArray = A.calculate(myArray, count, count);
 				break;
 			case 'D':

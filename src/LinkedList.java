@@ -24,11 +24,16 @@ public class LinkedList {
 		String result = "";
 		Node temp = head;
 		while(temp != null) {
-			if(temp.dependency == null)
+			if(temp.dependency == "0")
 				result = temp.name;
 			temp = temp.next;
 		}
 		return result;
+	}
+	
+	public void printStart()
+	{
+		
 	}
 	
 	public boolean exists(String name) {	//method to see if the name exists in the linked list
@@ -78,28 +83,31 @@ public class LinkedList {
 	}
 	
 	public String[][] calculate(String[][] myArray, int rows, int columns){
-		System.out.println("Hi");
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
-					myArray[r][c] = getStart();
-					System.out.print(getStart());
+					myArray[r][c] = this.getStart();
 				}
 				else {
-					System.out.println("Hello");
 					myArray[r][c] = getNext(myArray[r][c-1]);
 				}
 			}
 		}
 		
-		System.out.println("Yo");
-		for(int r = 0; r < rows; r++) {
+		/*for(int r = 0; r < rows; r++) {
 			System.out.print("Hola");
 			for(int c = 0; c < columns; c++) {
 				System.out.print(myArray[r][c] + " ");
-				System.out.println("Hi");
+				System.out.print("Hi");
 			}
 			System.out.println();
+		}*/
+		
+		for(int r = 0; r < rows; r++) {
+			for(int c = 0; c < columns; c++) {
+				System.out.print(myArray[r][c]);
+			}
+			System.out.println("");
 		}
 		return myArray;
 	}
