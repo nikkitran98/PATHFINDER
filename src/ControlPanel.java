@@ -10,6 +10,9 @@ public class ControlPanel extends JPanel {
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, calcButton, helpButton, aboutButton;
 	private int width, height;
+	String activity, dependancy;
+	int duration, count;
+	LinkedList list = new LinkedList();
 	
 	ButtonListener buttonlistener = new ButtonListener();
 	
@@ -83,21 +86,21 @@ public class ControlPanel extends JPanel {
 		activityField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
-				// variable = activityField.getText();
+				activity = activityField.getText();
 			}
 		});
 		
 		durationField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
-				// variable = durationField.getText();
+				duration = Integer.parseInt(durationField.getText());
 			}
 		});
 		
 		dependancyField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
-				// variable = dependancyField.getText();
+				dependancy = dependancyField.getText();
 			}
 		});
 		
@@ -109,12 +112,32 @@ public class ControlPanel extends JPanel {
 			
 			if(event.getSource() == addButton) {
 				// TODO
+				list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
+				count++;
 			}
 			else if (event.getSource() == restartButton) {
 				// TODO
+				//list.deleteList();
+				list.findEnd();
 			}
 			else if (event.getSource() == calcButton) {
 				// TODO
+				// create if-else or try-catch for error checking 
+				
+				list.dupCount();
+				list.multCount();
+				list.findEnd();
+				Node[][] myArray = new Node[count][count];
+				for(int r = 0; r < count; r++) {
+					for(int c = 0; c < count; c++) {
+						myArray[r][c] = null;
+					}
+				}
+				
+				Node[][] newArray = new Node[count][count];
+				
+				newArray = list.calculate(myArray, count, count);
+				
 			}
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
