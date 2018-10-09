@@ -8,9 +8,16 @@ public class PATHFINDER extends JApplet {
 
 	  public void init()
 	   {
-	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
-	       getContentPane().add(panel);
-	       setSize(WIDTH,HEIGHT);
+//	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
+//	       getContentPane().add(panel);
+//	       setSize(WIDTH,HEIGHT);
+	       
+	       
+	       JFrame frame = new JFrame ("PATHFINDER");
+	       frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+	       frame.getContentPane().add(new ControlPanel(WIDTH, HEIGHT));
+	       frame.pack();
+	       frame.setVisible(true);
 	  }
 
 	public static void main (String []args) {
