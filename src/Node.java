@@ -11,12 +11,13 @@ public class Node
 	public Node()
 	{
 		next = null;
-		name = "";
+		name = null;
 		dependency = null;
 		duration = 0;
 		duplicate = 0;
 		multiple = 0;
 		end = 0;
+		
 	}
 	
 	public Node(String name2, String dependency2, int duration2)
@@ -27,5 +28,11 @@ public class Node
 		duration = duration2;
 		duplicate = 0;
 		multiple = 0;
+	}
+	public int getDuration(){
+		return duration;
+	}
+	public String getName(){
+		return name;
 	}
 }

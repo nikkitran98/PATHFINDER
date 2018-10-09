@@ -1,11 +1,12 @@
 // Rebecca
-
+import java.util.*;
 public class LinkedList {
 	private Node head;		//creates a head of type Node
-	private int count;
+	private int count=0;
 	
 	public LinkedList() {		//Default LinkedList constructor
-		head = new Node();	//creates a new node
+		head = new Node();//creates a new node
+		
 	}
 	
 	public void add(String name, String dependency, int duration) {	//method to add a new node
@@ -172,5 +173,56 @@ public class LinkedList {
 			temp=temp.next;
 		}
 		System.out.print("\n");
+	}
+	public void order(ArrayList<Node> list,int total){
+		
+		Node temp;
+		int max=list.get(0).getDuration();
+		
+		for(int i =0;i<total;i++){
+			for(int j=i+1;j<total;j++){
+				if(list.get(j).getDuration()>max){
+					max=list.get(j).getDuration();
+					temp =list.get(i);
+					list.set(i,list.get(j));
+					list.set(j, temp);
+					
+				}
+			}
+			
+		}
+		
+		
+	}
+	public void printAList(ArrayList<Node> list,int total){
+		String result="";
+		for(int i =0;i<total;i++)
+		System.out.print(list.get(i).getName()+"       "+list.get(i).getDuration()+"\n");
+		
+		
+	}
+	public void makePath(Node[][] myArray, int rows, int columns){
+		int time = 0;
+		int total =0;
+		String path = "";
+		ArrayList<Node> paths = new ArrayList<Node>();
+		Node temp;
+		for(int r=0;r<rows;r++){
+			if(myArray[r][0].end==0)
+				break;
+				path = "";
+				time=0;
+				for(int c=columns-1;c>-1;c--){
+					if(myArray[r][c].name==null)
+						continue;
+					path+=myArray[r][c].name+"/";
+					time+=myArray[r][c].duration;
+				}
+				temp= new Node(path, "", time);
+			paths.add(temp);
+			total ++;
+		}
+		order(paths,total);
+		printAList(paths,total);
 	}
 }
