@@ -85,21 +85,18 @@ public class ControlPanel extends JPanel {
 		
 		activityField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
 				activity = activityField.getText();
 			}
 		});
 		
 		durationField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
 				duration = Integer.parseInt(durationField.getText());
 			}
 		});
 		
 		dependancyField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
 				dependancy = dependancyField.getText();
 			}
 		});
@@ -111,14 +108,11 @@ public class ControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			
 			if(event.getSource() == addButton) {
-				// TODO
-				list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
+				list.add(activity, dependancy, duration);
 				count++;
 			}
 			else if (event.getSource() == restartButton) {
-				// TODO
-				//list.deleteList();
-				list.findEnd();
+				list.deleteList();
 			}
 			else if (event.getSource() == calcButton) {
 				// TODO
