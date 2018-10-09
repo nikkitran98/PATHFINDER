@@ -11,7 +11,7 @@ public class Node
 	public Node()
 	{
 		next = null;
-		name = "";
+		name = null;
 		dependency = null;
 		duration = 0;
 		duplicate = 0;
