@@ -36,33 +36,43 @@ public class PATHFINDER extends JApplet {
 				System.out.print("Enter Activity Duration: ");
 				duration = reader.nextInt();
 				reader.nextLine();
-				System.out.print("Enter Amount of Dependencies: ");
-				depCount=reader.nextInt();
+				System.out.print("Enter Dependency: ");
+				dependency = reader.nextLine();
+				A.add(name, dependency, duration);
+				
+				/*System.out.print("Enter Amount of Dependencies: ");		//WHY DO WE NEED TO COUNT AMOUNT OF DEPENDENCIES NOW?
+				depCount=reader.nextInt();		//CONVERSE WITH BEV AND JESSE
 				reader.nextLine();
 				if (depCount==0){
 					dependency= "0";
 					A.add(name, dependency, duration);
 				}
-				else{
+				else{		//WHAT IF WE DIDN'T HAVE A DEP COUNT AND JUST MADE THEM INPUT MULTIPLE TIMES
 					for(int i = 0;i<depCount;i++)
 					{
 						System.out.print("Enter Activity Dependency #" +(i+1)+ ": ");
 						dependency = reader.nextLine();
 						A.add(name, dependency, duration);
 					}
-				}
-				//A.getStart();
+				}*/
 				count++;
 				break;
 			case 'C':
 				A.dupCount();
-				String[][] myArray = new String[count][count];
+				A.multCount();
+				A.findEnd();
+				Node[][] myArray = new Node[count][count];
 				for(int r = 0; r < count; r++) {
 					for(int c = 0; c < count; c++) {
-						myArray[r][c] = "0";
+						myArray[r][c] = null;
 					}
 				}
-				A.calculate(myArray, count, count);
+				
+				Node[][] newArray = new Node[count][count];
+				
+				newArray = A.calculate(myArray, count, count);
+				String nme = "";
+				
 				break;
 			case 'D':
 				A.deleteList();

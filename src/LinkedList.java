@@ -22,24 +22,37 @@ public class LinkedList {
 		count++;
 	}
 	
-	public String getStart() {
-		String result = "";
+	public Node getEnd() {
+		Node result = new Node();
 		Node temp = head;
-		if(temp.next == null) {
-			result = head.name;
+		while(temp!= null) {
+			if(temp.end == 1 && temp.multiple != -1) {
+				if(temp.multiple == 1)
+					temp.multiple = -1;
+				result = temp;
+				break;
+			}
+			temp = temp.next;
 		}
 		return result;
 	}
 	
-	public String getNext(String nw) {
-		String result = "";
-		Node temp = head;
-		while(temp != null) {
-			if((temp.dependency).equals(nw) && temp.duplicate != -1) {
-				if(temp.duplicate == 1) {
+	public Node getNext(Node nw) {
+		Node result = new Node();			//instantiates blank string
+		Node temp = head;			//sets a temp node equal to head
+		if((nw.name) == null) {
+			return result;
+		}
+		else {
+			
+		}
+		while(temp != null) {		//while temp is not null
+			if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
+				if(temp.duplicate == 1)
 					temp.duplicate = -1;
-				}
-				result = temp.name;
+				if(temp.multiple == 1)
+					temp.multiple = -1;
+				result = temp;
 			}
 			temp = temp.next;
 		}
@@ -59,17 +72,26 @@ public class LinkedList {
 	
 	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
 		Node temp = head;
-		Node ntemp = temp;
-		while(temp != null)
+		while(temp.next != null)
 		{
+			Node ntemp = temp.next;
 			while(ntemp!= null)
 			{
-				if((temp.dependency).equals(ntemp.dependency)) {
-					temp.duplicate = 1;
-					ntemp.duplicate = 1;
+				if((temp.name).equals(ntemp.name) && temp.dependency != "0") {
+					changeDup(temp);
+					changeDup(ntemp);
 				}
 				ntemp = ntemp.next;
 			}
+			temp = temp.next;
+		}
+	}
+	
+	public void changeDup(Node nw) {
+		Node temp = head;
+		while(temp != null) {
+			if((temp.name).equals(nw.dependency))
+				temp.duplicate = 1;
 			temp = temp.next;
 		}
 	}
@@ -78,31 +100,22 @@ public class LinkedList {
 		head = null;
 	}
 	
-	public void calculate(String[][] myArray, int rows, int columns){
+	public Node[][] calculate(Node[][] myArray, int rows, int columns){
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
-					myArray[r][c] = this.getStart();
+					myArray[r][0] = getEnd();
 				}
-				else {
-					myArray[r][c] = getNext(myArray[r][c-1]);
-				}
+				else
+					/*if((myArray[r][c-1]).name == null)
+						break;
+					else */
+						myArray[r][c] = getNext(myArray[r][c-1]);
 			}
 		}
-		
-		for(int r = 0; r < rows + 1; r++) {
-			if(myArray[r] == myArray[r+1]) {
-				myArray[r+1].equals(null);
-			}
-		}
-		
-		for(int r = 0; r < rows; r++) {
-			for(int c = 0; c < columns; c++) {
-				System.out.print(myArray[r][c] + " ");
-			}
-			System.out.println();
-		}
+		return myArray;
 	}
+	
 	public void findEnd(){
 		Node temp =head;
 		Node temp2=head.next;
@@ -121,7 +134,6 @@ public class LinkedList {
 				    else
 				    	temp2=temp2.next;
 				}
-				
 			}
 			if(temp.next!=null)
 			temp=temp.next;
@@ -131,6 +143,22 @@ public class LinkedList {
 		}
 		
 	}
+	
+	public void multCount() {
+		Node temp = head;
+		while(temp.next != null) {
+			Node ntemp = temp.next;
+			while(ntemp != null) {
+				if((temp.name).equals(ntemp.name)) {
+					temp.multiple = 1;
+					ntemp.multiple = 1;
+				}
+				ntemp = ntemp.next;
+			}
+			temp = temp.next;
+		}
+	}
+	
 	public void print(){
 		Node temp=head;
 		while(temp!=null){
