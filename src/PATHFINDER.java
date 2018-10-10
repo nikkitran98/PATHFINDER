@@ -27,7 +27,7 @@ public class PATHFINDER extends JApplet {
 		String name = "";
 		String dependency = "";
 		char input;
-//		LinkedList A = new LinkedList();
+		LinkedList A = new LinkedList();
 		
 
 		Scanner reader = new Scanner(System.in);
