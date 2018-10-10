@@ -19,7 +19,6 @@ public class Node
 		multiple = 0;
 		pcount = 0;
 		end = 0;
-		
 	}
 	
 	public Node(String name2, String dependency2, int duration2)

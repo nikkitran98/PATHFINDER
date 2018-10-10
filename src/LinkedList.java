@@ -6,7 +6,6 @@ public class LinkedList {
 	
 	public LinkedList() {		//Default LinkedList constructor
 		head = new Node();//creates a new node
-		
 	}
 	
 	public void add(String name, String dependency, int duration) {	//method to add a new node
@@ -28,8 +27,10 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.multiple == 1)
+				if(temp.multiple == 1 && temp.pcount == 0)
 					temp.multiple = -1;
+				else if(temp.multiple == 1 && temp.pcount > 0)
+					temp.pcount = temp.pcount - 1;
 				result = temp;
 				break;
 			}
@@ -49,8 +50,10 @@ public class LinkedList {
 				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(temp.duplicate == 1)
 						temp.duplicate = -1;
-					if(temp.multiple == 1)
+					if(temp.multiple == 1 && temp.pcount == 0)
 						temp.multiple = -1;
+					else if(temp.multiple == 1 && temp.pcount > 0)
+						temp.pcount = temp.pcount - 1;
 					result = temp;
 				}
 				temp = temp.next;
@@ -223,8 +226,8 @@ public class LinkedList {
 		}
 		System.out.print("\n");
 	}
+	
 	public void order(ArrayList<Node> list,int total){
-		
 		Node temp;
 		int max=list.get(0).getDuration();
 		
@@ -235,14 +238,11 @@ public class LinkedList {
 					temp =list.get(i);
 					list.set(i,list.get(j));
 					list.set(j, temp);
-					
 				}
 			}
-			
 		}
-		
-		
 	}
+	
 	public void printAList(ArrayList<Node> list,int total){
 		String result="";
 		for(int i =0;i<total;i++)
@@ -261,19 +261,25 @@ public class LinkedList {
 				break;
 				path = "";
 				time=0;
-				for(int c=columns-1;c>-1;c--){
-					if(myArray[r][c].name==null)
+				for(int c=columns-1;c>=0;c--){
+					try {
+						if(exists(myArray[r][c].name)) {
+							path+=myArray[r][c].name+"/";
+							time+=myArray[r][c].duration;
+						}
+					}
+					catch(NullPointerException e) {
 						continue;
-					path+=myArray[r][c].name+"/";
-					time+=myArray[r][c].duration;
+					}
 				}
-				temp= new Node(path, "", time);
+			temp= new Node(path, "", time);
 			paths.add(temp);
-			total ++;
+			total++;
 		}
 		order(paths,total);
 		printAList(paths,total);
 	}
+
 	public void restart(){
 		head = new Node();
 	}
