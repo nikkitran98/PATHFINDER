@@ -111,9 +111,11 @@ public class ControlPanel extends JPanel {
 			if(event.getSource() == addButton) {
 				list.add(activity, dependancy, duration);
 				count++;
+				JOptionPane.showMessageDialog(null, "added");
 			}
 			else if (event.getSource() == restartButton) {
 				list.deleteList();
+				JOptionPane.showMessageDialog(null, "restarted");
 			}
 			else if (event.getSource() == calcButton) {
 				// TODO
@@ -132,6 +134,7 @@ public class ControlPanel extends JPanel {
 				Node[][] newArray = new Node[count][count];
 				
 				newArray = list.calculate(myArray, count, count);
+				JOptionPane.showMessageDialog(null, "calculated");
 				
 			}
 			else if (event.getSource() == helpButton) {
