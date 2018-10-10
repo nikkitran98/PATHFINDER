@@ -3,21 +3,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PATHFINDER extends JApplet {
-		private final int WIDTH = 650;
+	  private final int WIDTH = 650;
 	  private final int HEIGHT = 340;
+	  private ControlPanel panel;
+	  static LinkedList A;
 
 	  public void init()
-	   {
-//	       ControlPanel panel = new ControlPanel(WIDTH,HEIGHT);
-//	       getContentPane().add(panel);
-//	       setSize(WIDTH,HEIGHT);
+	   {		  
+		  A = new LinkedList();
+		  panel = new ControlPanel(A, WIDTH, HEIGHT);
 	       
-	       
-	       JFrame frame = new JFrame ("PATHFINDER");
-	       frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-	       frame.getContentPane().add(new ControlPanel(WIDTH, HEIGHT));
-	       frame.pack();
-	       frame.setVisible(true);
+	      JFrame frame = new JFrame ("PATHFINDER");
+	      frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+	      frame.getContentPane().add(panel);
+	      frame.pack();
+	      frame.setVisible(true);
 	  }
 
 	public static void main (String []args) {
@@ -27,7 +27,7 @@ public class PATHFINDER extends JApplet {
 		String name = "";
 		String dependency = "";
 		char input;
-		LinkedList A = new LinkedList();
+//		LinkedList A = new LinkedList();
 		
 
 		Scanner reader = new Scanner(System.in);

@@ -12,14 +12,15 @@ public class ControlPanel extends JPanel {
 	private int width, height;
 	String activity, dependancy;
 	int duration, count;
-	LinkedList list = new LinkedList();
+	private LinkedList list;
 	
 	ButtonListener buttonlistener = new ButtonListener();
 	
 	// constructor to configure panel
-	public ControlPanel(int width, int height) {
+	public ControlPanel(LinkedList list, int width, int height) {
 		this.width = width;
 		this.height = height;
+		this.list = list;
 		setLayout(new BorderLayout());
 		setBackground(Color.blue);
 		setPreferredSize(new Dimension(width,height));
