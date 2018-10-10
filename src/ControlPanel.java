@@ -10,8 +10,8 @@ public class ControlPanel extends JPanel {
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, calcButton, helpButton, aboutButton;
 	private int width, height;
-	String activity, dependancy;
-	int duration, count;
+	private String activity, dependancy;
+	private int duration, count;
 	private LinkedList list;
 	private JTextArea output;
 	
@@ -129,7 +129,7 @@ public class ControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			
 			if(event.getSource() == addButton) {
-					list.add(activity, dependancy, duration);
+					list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
 					count++;
 
 				// TODO
@@ -160,11 +160,10 @@ public class ControlPanel extends JPanel {
 					
 					String result = list.makePath(newArray, count, count);
 	   	
-	       	 		// temp is passed to output to display flight info
 	       	 		output.setText(result);
 				}
 				catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Error: please enter integer for duration.");
+					JOptionPane.showMessageDialog(null, "Error. Please try again. ");
 				}
 				
 				
