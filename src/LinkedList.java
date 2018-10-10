@@ -27,10 +27,15 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.multiple == 1 && temp.pcount == 1)
-					temp.multiple = -1;
-				else if(temp.multiple == 1 && temp.pcount > 0)
-					temp.pcount = temp.pcount - 1;
+				if(temp.pcount == 1) {
+					temp.end = -1;
+				}
+				else {
+					if(temp.multiple == 1 && temp.pcount == 1)
+						temp.multiple = -1;
+					else if(temp.multiple == 1 && temp.pcount > 0)
+						temp.pcount = temp.pcount - 1;
+				}
 				result = temp;
 				break;
 			}
@@ -75,14 +80,15 @@ public class LinkedList {
 		return result;
 	}
 	
-	public boolean exists(String dependency) {	//method to see if the name exists in the linked list
-		boolean exists = false;					//sets variable exists to false
-		Node temp = head;						//creates a temporary node that is equal to the head
-		while(temp.next != null) {				//traverses through the linked list
-			if((temp.name).equals(dependency))	//if the name at that Node is equal to the specified name
-				exists = true;					//change exists to true
+	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
+		boolean exists = false;							//sets variable exists to false
+		Node temp = head;								//creates a temporary node that is equal to the head
+		while(temp != null) {							//traverses through the linked list
+			if((temp.name).equals(dependency)  == true)	//if the name at that Node is equal to the specified name
+				exists = true;							//change exists to true
 			temp = temp.next;
 		}
+		
 		if(dependency == "0") {
 			temp = head;
 			while(temp != null) {
@@ -154,10 +160,10 @@ public class LinkedList {
 					myArray[r][0] = getEnd();
 				}
 				else
-					if((myArray[r][c-1]).name == null)
-						break;
-					else 
+					if((exists((myArray[r][c-1]).name)))
 						myArray[r][c] = getNext(myArray[r][c-1]);
+					else 
+						break;
 			}
 		}
 		return myArray;

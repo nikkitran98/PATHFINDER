@@ -15,10 +15,10 @@ public class Node
 		name = null;
 		dependency = null;
 		duration = 0;
-		duplicate = 0;
-		multiple = 0;
-		pcount = 0;
-		end = 0;
+		duplicate = 0;			//checks to see if one activity has multiple dependencies
+		multiple = 0;			//checks to see if there are many of one activity
+		pcount = 0;				//checks to see the path count for that activity
+		end = 0;				//checks to see if it is the end
 	}
 	
 	public Node(String name2, String dependency2, int duration2)
