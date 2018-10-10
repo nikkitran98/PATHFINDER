@@ -130,22 +130,60 @@ public class ControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			
 			if(event.getSource() == addButton) {
-					list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
-					count++;
-
-				// TODO
-				// OptionPane.showMessageDialog(null, "Error: please enter activity name and duration field.");
-				//JOptionPane.showMessageDialog(null, "Error: please enter integer for duration.");
-				//JOptionPane.showMessageDialog(null, "Error: please enter a string for activity name and activity dependency field.");
+		
+				try {
+					if(activityField.getText().isEmpty() || dependancyField.getText().isEmpty() || durationField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Error: please make sure all fields are filled.");
+					}
+					else {
+						list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
+						count++;
+						activityField.setText("");
+						durationField.setText("");
+						dependancyField.setText("");
+					}
+				}
+				catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Error: please enter integer for duration.");
+				}
 			}
 			else if (event.getSource() == restartButton) {
 				list.deleteList();
+				output.setText("");
 				JOptionPane.showMessageDialog(null, "PATHFINDER restarted.");
 			}
 			else if (event.getSource() == calcButton) {
 				// TODO
 				
 				try {
+//					if(list.isConnected() == false) {
+//						String message = "All nodes must be connected. Deleting network diagram...";
+//						JOptionPane.showMessageDialog(null, message);
+//						list.deleteList();
+//					}
+//					if(list.endExists() == false) {
+//						String message = "There cannot be a cycle. Deleting network diagram...";
+//						JOptionPane.showMessageDialog(null, message);
+//						list.deleteList();
+//					}
+//					else {
+//						list.dupCount();
+//						list.multCount();
+//						list.findEnd();
+//						Node[][] myArray = new Node[count][count];
+//						for(int r = 0; r < count; r++) {
+//							for(int c = 0; c < count; c++) {
+//								myArray[r][c] = null;
+//							}
+//						}
+//						
+//						Node[][] newArray = new Node[count][count];
+//						newArray = list.calculate(myArray, count, count);
+//						
+//						String result = list.makePath(newArray, count, count);
+//		   	
+//		       	 		output.setText(result);
+//					}
 					list.dupCount();
 					list.multCount();
 					list.findEnd();
@@ -172,7 +210,8 @@ public class ControlPanel extends JPanel {
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
 						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
-						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “none”. \n" + 
+						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “0”. \n" +
+						"If there are more than one dependencies, add them separately.\n" +
 						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
 						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 
 						"Calculate: Calculates the possibly paths and the time to complete the entire path. \n" + 
