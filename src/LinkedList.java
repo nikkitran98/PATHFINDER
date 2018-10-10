@@ -286,8 +286,10 @@ public class LinkedList {
 		order(paths,total);
 		//printAList(paths,total);
 		String result="";
+		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+			result += "Path " + pathNum + "			" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+			pathNum++;
 		}
 		
 		return result;

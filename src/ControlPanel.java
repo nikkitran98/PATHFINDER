@@ -104,6 +104,7 @@ public class ControlPanel extends JPanel {
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
 		
+		// TODO: make action listener to work
 		activityField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				activity = activityField.getText();
