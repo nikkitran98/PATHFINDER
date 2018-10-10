@@ -255,9 +255,8 @@ public class LinkedList {
 		String result="";
 		for(int i =0;i<total;i++)
 		System.out.print(list.get(i).getName()+"       "+list.get(i).getDuration()+"\n");
-		
-		
 	}
+	
 	public void makePath(Node[][] myArray, int rows, int columns){
 		int time = 0;
 		int total =0;
