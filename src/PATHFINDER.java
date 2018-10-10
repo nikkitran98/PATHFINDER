@@ -54,24 +54,7 @@ public class PATHFINDER extends JApplet {
 				String[] depList = dependency.split(",");
 				for(int i = 0; i < depList.length; i++) {
 					A.add(name, depList[i], duration);
-					System.out.println(name + " " + depList[i] + " " + duration);
 				}
-				
-				/*System.out.print("Enter Amount of Dependencies: ");		//WHY DO WE NEED TO COUNT AMOUNT OF DEPENDENCIES NOW?
-				depCount=reader.nextInt();		//CONVERSE WITH BEV AND JESSE
-				reader.nextLine();
-				if (depCount==0){
-					dependency= "0";
-					A.add(name, dependency, duration);
-				}
-				else{		//WHAT IF WE DIDN'T HAVE A DEP COUNT AND JUST MADE THEM INPUT MULTIPLE TIMES
-					for(int i = 0;i<depCount;i++)
-					{
-						System.out.print("Enter Activity Dependency #" +(i+1)+ ": ");
-						dependency = reader.nextLine();
-						A.add(name, dependency, duration);
-					}
-				}*/
 				count++;
 				break;
 			case 'C':

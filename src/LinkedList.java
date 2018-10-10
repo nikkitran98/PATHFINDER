@@ -148,8 +148,6 @@ public class LinkedList {
 	}
 	
 	public Node[][] calculate(Node[][] myArray, int rows, int columns){
-		findEnd();
-		
 		Node temp = head;
 		while(temp != null) {
 			updateCount(temp, temp);
@@ -176,7 +174,7 @@ public class LinkedList {
 		Node temp2=head.next;
 		for(int i =0;i<count;i++){
 			for(int j=0;j<count;j++){
-				if((temp2.dependency.equals(temp.name)))//checks dependency versus name
+				if(temp2.dependency.equals(temp.name))//checks dependency versus name
 					break;
 				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)){// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
 					temp.end=1;
@@ -187,6 +185,17 @@ public class LinkedList {
 				    else
 				    	temp2=temp2.next;
 				}
+				if(temp.end == 1)
+					break;
+			}
+			if(temp.end == 1) {
+				Node change = head;
+				while(change != null) {
+					if((change.name).equals(temp.name))
+						change.end = 1;
+					change = change.next;
+				}
+				break;
 			}
 			if(temp.next!=null)
 			temp=temp.next;
@@ -239,12 +248,10 @@ public class LinkedList {
 	
 	public void order(ArrayList<Node> list,int total){
 		Node temp;
-		int max=list.get(0).getDuration();
 		
 		for(int i =0;i<total;i++){
 			for(int j=i+1;j<total;j++){
-				if(list.get(j).getDuration()>max){
-					max=list.get(j).getDuration();
+				if(list.get(j).getDuration()>list.get(i).getDuration()){
 					temp =list.get(i);
 					list.set(i,list.get(j));
 					list.set(j, temp);
@@ -252,17 +259,12 @@ public class LinkedList {
 			}
 		}
 	}
-	
-	public void printAList(ArrayList<Node> list,int total){
-		String result="";
-		for(int i =0;i<total;i++)
-		System.out.print(list.get(i).getName()+"       "+list.get(i).getDuration()+"\n");
-	}
-	
+
 	public String makePath(Node[][] myArray, int rows, int columns){
 		int time = 0;
 		int total =0;
 		String path = "";
+		String result = "";
 		ArrayList<Node> paths = new ArrayList<Node>();
 		Node temp;
 		for(int r=0;r<rows;r++){
@@ -286,11 +288,10 @@ public class LinkedList {
 			total++;
 		}
 		order(paths,total);
-		//printAList(paths,total);
-		String result="";
+		
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += "Path " + pathNum + "			" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
 			pathNum++;
 		}
 		
