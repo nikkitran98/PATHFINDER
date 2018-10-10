@@ -87,8 +87,7 @@ public class PATHFINDER extends JApplet {
 				System.out.println("All paths have been deleted");
 				break;
 			case 'R':
-				A.findEnd();
-				A.print();
+				A.restart();
 				break;
 			case 'O':
 				break;

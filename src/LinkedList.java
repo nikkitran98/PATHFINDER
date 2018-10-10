@@ -225,4 +225,7 @@ public class LinkedList {
 		order(paths,total);
 		printAList(paths,total);
 	}
+	public void restart(){
+		head = new Node();
+	}
 }
