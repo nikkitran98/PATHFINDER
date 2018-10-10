@@ -255,9 +255,15 @@ public class LinkedList {
 		String result="";
 		for(int i =0;i<total;i++)
 		System.out.print(list.get(i).getName()+"       "+list.get(i).getDuration()+"\n");
+<<<<<<< HEAD
 	}
 	
 	public void makePath(Node[][] myArray, int rows, int columns){
+=======
+
+	}
+	public String makePath(Node[][] myArray, int rows, int columns){
+>>>>>>> 21ffae371d4fc26fe41aef4b1b36ffb8d8137ab2
 		int time = 0;
 		int total =0;
 		String path = "";
@@ -284,7 +290,13 @@ public class LinkedList {
 			total++;
 		}
 		order(paths,total);
-		printAList(paths,total);
+		//printAList(paths,total);
+		String result="";
+		for(int i =0;i<total;i++) {
+			result += paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+		}
+		
+		return result;
 	}
 
 	public void restart(){

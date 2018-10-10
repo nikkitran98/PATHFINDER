@@ -3,8 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PATHFINDER extends JApplet {
-	  private final int WIDTH = 650;
-	  private final int HEIGHT = 340;
+	  private final int WIDTH = 390;
+	  private final int HEIGHT = 390;
 	  private ControlPanel panel;
 	  static LinkedList A;
 
