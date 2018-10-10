@@ -241,7 +241,7 @@ public class LinkedList {
 		
 		for(int i =0;i<total;i++){
 			for(int j=i+1;j<total;j++){
-				if(list.get(j).getDuration()>=max){
+				if(list.get(j).getDuration()>max){
 					max=list.get(j).getDuration();
 					temp =list.get(i);
 					list.set(i,list.get(j));
