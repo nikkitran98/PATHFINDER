@@ -5,14 +5,15 @@ import javax.swing.event.*;
 
 public class ControlPanel extends JPanel {
 	
-	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel;
-	private JLabel activityLabel, durationLabel, dependancyLabel;
+	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
+	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, calcButton, helpButton, aboutButton;
 	private int width, height;
 	String activity, dependancy;
 	int duration, count;
 	private LinkedList list;
+	private JTextArea output;
 	
 	ButtonListener buttonlistener = new ButtonListener();
 	
@@ -32,10 +33,18 @@ public class ControlPanel extends JPanel {
 		durationPanel = new JPanel();
 		dependancyPanel = new JPanel();
 		bottomPanel = new JPanel();
+		bottom1 = new JPanel();
+		bottom2 = new JPanel();
 		
 		activityLabel = new JLabel("Activity Name: ");
 		durationLabel = new JLabel("Activity Duration: ");
 		dependancyLabel = new JLabel("Activity Dependencies: ");
+		outputPath = new JLabel("Paths");
+		outputDependancy = new JLabel("Path Dependencies");
+		outputDuration = new JLabel("Duration");
+		
+		output = new JTextArea (30,30);
+		JScrollPane scrollPane = new JScrollPane(output);
 		
 		activityField = new JTextField();
 		durationField = new JTextField();
@@ -74,6 +83,17 @@ public class ControlPanel extends JPanel {
 		topPanel.setLayout(new GridLayout(2,1));
 		topPanel.add(top1);
 		topPanel.add(top2);
+		
+		bottom1.setLayout(new GridLayout(1,3));
+		bottom1.add(outputPath);
+		bottom1.add(outputDependancy);
+		bottom1.add(outputDuration);
+		
+		bottom2.add(scrollPane);
+		
+		bottomPanel.setLayout(new GridLayout(2,1));
+		bottomPanel.add(bottom1);
+		bottomPanel.add(bottom2);
 
 		JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
 		add(pane);
@@ -109,32 +129,44 @@ public class ControlPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			
 			if(event.getSource() == addButton) {
-				list.add(activity, dependancy, duration);
-				count++;
-				JOptionPane.showMessageDialog(null, "added");
+					list.add(activity, dependancy, duration);
+					count++;
+
+				// TODO
+				// OptionPane.showMessageDialog(null, "Error: please enter activity name and duration field.");
+				//JOptionPane.showMessageDialog(null, "Error: please enter integer for duration.");
+				//JOptionPane.showMessageDialog(null, "Error: please enter a string for activity name and activity dependency field.");
 			}
 			else if (event.getSource() == restartButton) {
 				list.deleteList();
-				JOptionPane.showMessageDialog(null, "restarted");
+				JOptionPane.showMessageDialog(null, "PATHFINDER restarted.");
 			}
 			else if (event.getSource() == calcButton) {
 				// TODO
-				// create if-else or try-catch for error checking 
 				
-				list.dupCount();
-				list.multCount();
-				list.findEnd();
-				Node[][] myArray = new Node[count][count];
-				for(int r = 0; r < count; r++) {
-					for(int c = 0; c < count; c++) {
-						myArray[r][c] = null;
+				try {
+					list.dupCount();
+					list.multCount();
+					list.findEnd();
+					Node[][] myArray = new Node[count][count];
+					for(int r = 0; r < count; r++) {
+						for(int c = 0; c < count; c++) {
+							myArray[r][c] = null;
+						}
 					}
+					
+					Node[][] newArray = new Node[count][count];
+					newArray = list.calculate(myArray, count, count);
+					
+					String result = list.makePath(newArray, count, count);
+	   	
+	       	 		// temp is passed to output to display flight info
+	       	 		output.setText(result);
+				}
+				catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Error: please enter integer for duration.");
 				}
 				
-				Node[][] newArray = new Node[count][count];
-				
-				newArray = list.calculate(myArray, count, count);
-				JOptionPane.showMessageDialog(null, "calculated");
 				
 			}
 			else if (event.getSource() == helpButton) {
