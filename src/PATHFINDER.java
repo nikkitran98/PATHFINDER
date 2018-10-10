@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.List;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -49,7 +51,11 @@ public class PATHFINDER extends JApplet {
 				reader.nextLine();
 				System.out.print("Enter Dependency: ");
 				dependency = reader.nextLine();
-				A.add(name, dependency, duration);
+				String[] depList = dependency.split(",");
+				for(int i = 0; i < depList.length; i++) {
+					A.add(name, depList[i], duration);
+					System.out.println(name + " " + depList[i] + " " + duration);
+				}
 				
 				/*System.out.print("Enter Amount of Dependencies: ");		//WHY DO WE NEED TO COUNT AMOUNT OF DEPENDENCIES NOW?
 				depCount=reader.nextInt();		//CONVERSE WITH BEV AND JESSE
