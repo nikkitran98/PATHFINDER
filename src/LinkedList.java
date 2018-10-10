@@ -148,6 +148,8 @@ public class LinkedList {
 	}
 	
 	public Node[][] calculate(Node[][] myArray, int rows, int columns){
+		findEnd();
+		
 		Node temp = head;
 		while(temp != null) {
 			updateCount(temp, temp);
@@ -174,7 +176,7 @@ public class LinkedList {
 		Node temp2=head.next;
 		for(int i =0;i<count;i++){
 			for(int j=0;j<count;j++){
-				if(temp2.dependency.equals(temp.name))//checks dependency versus name
+				if((temp2.dependency.equals(temp.name)))//checks dependency versus name
 					break;
 				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)){// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
 					temp.end=1;
