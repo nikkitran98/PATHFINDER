@@ -28,6 +28,7 @@ public class PATHFINDER extends JApplet {
 		String dependency = "";
 		char input;
 		LinkedList A = new LinkedList();
+		
 
 		Scanner reader = new Scanner(System.in);
 
@@ -78,7 +79,7 @@ public class PATHFINDER extends JApplet {
 				Node[][] newArray = new Node[count][count];
 				
 				newArray = A.calculate(myArray, count, count);
-				String nme = "";
+				A.makePath(newArray, count, count);
 				
 				break;
 			case 'D':
@@ -86,8 +87,7 @@ public class PATHFINDER extends JApplet {
 				System.out.println("All paths have been deleted");
 				break;
 			case 'R':
-				A.findEnd();
-				A.print();
+				A.restart();
 				break;
 			case 'O':
 				break;

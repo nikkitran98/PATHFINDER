@@ -19,6 +19,7 @@ public class Node
 		multiple = 0;
 		pcount = 0;
 		end = 0;
+		
 	}
 	
 	public Node(String name2, String dependency2, int duration2)
@@ -30,5 +31,11 @@ public class Node
 		duplicate = 0;
 		multiple = 0;
 		pcount = 1;
+	}
+	public int getDuration(){
+		return duration;
+	}
+	public String getName(){
+		return name;
 	}
 }
