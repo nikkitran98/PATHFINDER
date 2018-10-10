@@ -27,7 +27,7 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.multiple == 1 && temp.pcount == 0)
+				if(temp.multiple == 1 && temp.pcount == 1)
 					temp.multiple = -1;
 				else if(temp.multiple == 1 && temp.pcount > 0)
 					temp.pcount = temp.pcount - 1;
@@ -50,11 +50,12 @@ public class LinkedList {
 				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(temp.duplicate == 1)
 						temp.duplicate = -1;
-					if(temp.multiple == 1 && temp.pcount == 0)
+					if(temp.multiple == 1 && temp.pcount == 1)
 						temp.multiple = -1;
-					else if(temp.multiple == 1 && temp.pcount > 0)
+					else if(temp.multiple == 1 && temp.pcount > 1)
 						temp.pcount = temp.pcount - 1;
 					result = temp;
+					break;
 				}
 				temp = temp.next;
 			}
@@ -169,8 +170,7 @@ public class LinkedList {
 			for(int j=0;j<count;j++){
 				if(temp2.dependency.equals(temp.name))//checks dependency versus name
 					break;
-				else if (temp2.name.equals(temp.name))// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
-				{
+				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)){// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
 					temp.end=1;
 				}
 				else{
@@ -183,8 +183,10 @@ public class LinkedList {
 			if(temp.next!=null)
 			temp=temp.next;
 			if(temp.next!=null)
-			temp2=temp.next;	
+			temp2=temp.next;
+			
 		}
+		
 	}
 	
 	public void multCount() {
