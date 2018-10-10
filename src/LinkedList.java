@@ -45,28 +45,47 @@ public class LinkedList {
 			return result;
 		}
 		else {
-			
-		}
-		while(temp != null) {		//while temp is not null
-			if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-				if(temp.duplicate == 1)
-					temp.duplicate = -1;
-				if(temp.multiple == 1)
-					temp.multiple = -1;
-				result = temp;
+			while(temp != null) {		//while temp is not null
+				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
+					if(temp.duplicate == 1)
+						temp.duplicate = -1;
+					if(temp.multiple == 1)
+						temp.multiple = -1;
+					result = temp;
+				}
+				temp = temp.next;
 			}
+		}
+		return result;
+	}
+	
+	public boolean isConnected() {
+		boolean result = false;
+		Node temp = head;
+		while(temp != null) {
+			result = exists(temp.dependency);
+			if(result = false)
+				break;
 			temp = temp.next;
 		}
 		return result;
 	}
 	
-	public boolean exists(String name) {	//method to see if the name exists in the linked list
-		boolean exists = false;				//sets variable exists to false
-		Node temp = head;					//creates a temporary node that is equal to the head
-		while(temp.next != null) {			//traverses through the linked list
-			if((temp.name).equals(name))	//if the name at that Node is equal to the specified name
-				exists = true;				//change exists to true
+	public boolean exists(String dependency) {	//method to see if the name exists in the linked list
+		boolean exists = false;					//sets variable exists to false
+		Node temp = head;						//creates a temporary node that is equal to the head
+		while(temp.next != null) {				//traverses through the linked list
+			if((temp.name).equals(dependency))	//if the name at that Node is equal to the specified name
+				exists = true;					//change exists to true
 			temp = temp.next;
+		}
+		if(dependency == "0") {
+			temp = head;
+			while(temp != null) {
+				if(temp.dependency == dependency) {
+					exists = true;
+				}
+			}
 		}
 		return exists;					//returns the result
 	}
@@ -88,6 +107,23 @@ public class LinkedList {
 		}
 	}
 	
+	public void updateCount(Node current, Node nw) {
+		Node temp = head;
+		String name = nw.dependency;
+		while(temp.next != null) {
+			Node ntemp = temp.next;
+			while(ntemp != null) {
+				if((ntemp.name).equals(name) && (temp.name).equals(name)) {
+					current.pcount = (current.pcount) + 1;
+					updateCount(current, temp);
+					updateCount(current, ntemp);
+				}
+				ntemp = ntemp.next;
+			}
+			temp = temp.next;
+		}
+	}
+	
 	public void changeDup(Node nw) {
 		Node temp = head;
 		while(temp != null) {
@@ -98,19 +134,25 @@ public class LinkedList {
 	}
 	
 	public void deleteList() {
-		head = null;
+		head = new Node();
 	}
 	
 	public Node[][] calculate(Node[][] myArray, int rows, int columns){
+		Node temp = head;
+		while(temp != null) {
+			updateCount(temp, temp);
+			temp = temp.next;
+		}
+		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
 					myArray[r][0] = getEnd();
 				}
 				else
-					/*if((myArray[r][c-1]).name == null)
+					if((myArray[r][c-1]).name == null)
 						break;
-					else */
+					else 
 						myArray[r][c] = getNext(myArray[r][c-1]);
 			}
 		}
@@ -127,7 +169,6 @@ public class LinkedList {
 				else if (temp2.name.equals(temp.name))// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
 				{
 					temp.end=1;
-			
 				}
 				else{
 				    if(temp2.next==null)
@@ -139,10 +180,8 @@ public class LinkedList {
 			if(temp.next!=null)
 			temp=temp.next;
 			if(temp.next!=null)
-			temp2=temp.next;
-			
+			temp2=temp.next;	
 		}
-		
 	}
 	
 	public void multCount() {
@@ -158,6 +197,16 @@ public class LinkedList {
 			}
 			temp = temp.next;
 		}
+	}
+	
+	public boolean endExists() {
+		boolean result = false;
+		Node temp = head;
+		while(temp != null) {
+			if(temp.end == 1)
+				result = true;
+		}
+		return result;
 	}
 	
 	public void print(){

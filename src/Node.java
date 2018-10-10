@@ -4,6 +4,7 @@ public class Node
 	int duplicate;
 	int end;
 	int multiple;
+	int pcount;
 	String name;
 	String dependency;
 	Node next;
@@ -16,6 +17,7 @@ public class Node
 		duration = 0;
 		duplicate = 0;
 		multiple = 0;
+		pcount = 0;
 		end = 0;
 		
 	}
@@ -28,6 +30,7 @@ public class Node
 		duration = duration2;
 		duplicate = 0;
 		multiple = 0;
+		pcount = 1;
 	}
 	public int getDuration(){
 		return duration;
