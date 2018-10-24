@@ -227,7 +227,8 @@ public class ControlPanel extends JPanel {
 						+ "completion times to find the most efficient path to project completion. \n"
 						+ "The system itself will take the user inputs, create a \n"
 						+ "network diagram to determine all the paths in the network. \n"
-						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n";
+						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n"
+						+ "Testing";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			
