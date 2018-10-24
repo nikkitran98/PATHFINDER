@@ -8,7 +8,7 @@ public class ControlPanel extends JPanel {
 	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
 	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
 	private JTextField activityField, durationField, dependancyField;
-	private JButton addButton, restartButton, calcButton, helpButton, aboutButton;
+	private JButton addButton, restartButton, processButton, helpButton, aboutButton;
 	private int width, height;
 	private String activity, dependancy;
 	private int duration, count;
@@ -52,7 +52,7 @@ public class ControlPanel extends JPanel {
 		
 		addButton = new JButton("Add");
 		restartButton = new JButton("Restart");
-		calcButton = new JButton("Calculate");
+		processButton = new JButton("Process");
 		helpButton = new JButton("?");
 		aboutButton = new JButton("A");
 		
@@ -75,7 +75,7 @@ public class ControlPanel extends JPanel {
 		
 		top2.setLayout(new GridLayout(1,5));
 		top2.add(addButton);
-		top2.add(calcButton);
+		top2.add(processButton);
 		top2.add(restartButton);
 		top2.add(helpButton);
 		top2.add(aboutButton);
@@ -100,7 +100,7 @@ public class ControlPanel extends JPanel {
 		
 		addButton.addActionListener(buttonlistener);
 		restartButton.addActionListener(buttonlistener);
-		calcButton.addActionListener(buttonlistener);
+		processButton.addActionListener(buttonlistener);
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
 		
@@ -152,7 +152,7 @@ public class ControlPanel extends JPanel {
 				output.setText("");
 				JOptionPane.showMessageDialog(null, "PATHFINDER restarted.");
 			}
-			else if (event.getSource() == calcButton) {
+			else if (event.getSource() == processButton) {
 				// TODO
 				
 				try {
@@ -195,7 +195,7 @@ public class ControlPanel extends JPanel {
 					}
 					
 					Node[][] newArray = new Node[count][count];
-					newArray = list.calculate(myArray, count, count);
+					newArray = list.process(myArray, count, count);
 					
 					String result = list.makePath(newArray, count, count);
 	   	
@@ -214,7 +214,7 @@ public class ControlPanel extends JPanel {
 						"If there are more than one dependencies, add them separately.\n" +
 						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
 						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 
-						"Calculate: Calculates the possibly paths and the time to complete the entire path. \n" + 
+						"Process: Processes the possibly paths and the time to complete the entire path. \n" + 
 						"Restart: Discards all of the previous paths, allowing you to start a new network diagram.\n" + 
 						"?: Help section; you are currently here\n" + 
 						"A: Defines the purpose of the program";
@@ -226,7 +226,8 @@ public class ControlPanel extends JPanel {
 						+ "delivery times. Users are able to log activities and expected \n"
 						+ "completion times to find the most efficient path to project completion. \n"
 						+ "The system itself will take the user inputs, create a \n"
-						+ "network diagram to determine all the paths in the network. \n";
+						+ "network diagram to determine all the paths in the network. \n"
+						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			

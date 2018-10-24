@@ -70,7 +70,7 @@ public class PATHFINDER extends JApplet {
 				
 				Node[][] newArray = new Node[count][count];
 				
-				newArray = A.calculate(myArray, count, count);
+				newArray = A.process(myArray, count, count);
 				System.out.println(A.makePath(newArray, count, count));
 				
 				break;

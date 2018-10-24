@@ -147,7 +147,7 @@ public class LinkedList {
 		head = new Node();
 	}
 	
-	public Node[][] calculate(Node[][] myArray, int rows, int columns){
+	public Node[][] process(Node[][] myArray, int rows, int columns){
 		Node temp = head;
 		while(temp != null) {
 			updateCount(temp, temp);
