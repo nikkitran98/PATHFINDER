@@ -68,6 +68,7 @@ public class LinkedList {
 		return result;
 	}
 	
+	// TODO(Nikki)
 	public boolean isConnected() {
 		boolean result = false;
 		Node temp = head;
@@ -221,6 +222,7 @@ public class LinkedList {
 		}
 	}
 	
+	// TODO(Nikki)
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;

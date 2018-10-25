@@ -228,7 +228,8 @@ public class ControlPanel extends JPanel {
 						+ "The system itself will take the user inputs, create a \n"
 						+ "network diagram to determine all the paths in the network. \n"
 						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n"
-						+ "Testing";
+						+ "Testing"
+						+ "Testing part 2";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			
