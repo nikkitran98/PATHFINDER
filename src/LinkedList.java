@@ -68,15 +68,38 @@ public class LinkedList {
 		return result;
 	}
 	
+	// TODO(Nikki)
+	// checks to see the all the nodes are connected to each other
 	public boolean isConnected() {
 		boolean result = false;
 		Node temp = head;
+		
+		// test case 1: if a node doesn't depend on anything, other
+		// nodes must depend on it assuming it is the starter node
 		while(temp != null) {
 			result = exists(temp.dependency);
-			if(result = false)
+			if(result == false)
 				break;
-			temp = temp.next;
+			else
+				temp = temp.next;
 		}
+		
+		// test case 2: a node must depend on something and something
+		// must depend on it
+		if(result)
+		{
+			temp = head;
+			while(temp != null) {
+				if (exists(temp.dependency) && exists(temp.name))
+					result = true;
+				if(result == false)
+					break;
+				else
+					temp = temp.next;
+			}
+			
+		}
+		
 		return result;
 	}
 	
@@ -84,11 +107,12 @@ public class LinkedList {
 		boolean exists = false;							//sets variable exists to false
 		Node temp = head;								//creates a temporary node that is equal to the head
 		while(temp != null) {							//traverses through the linked list
-			if((temp.name).equals(dependency)  == true)	//if the name at that Node is equal to the specified name
-				exists = true;							//change exists to true
+			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
+				exists = true;							//sets exists to true
 			temp = temp.next;
 		}
 		
+		// checked to see if something depended on it
 		if(dependency == "0") {
 			temp = head;
 			while(temp != null) {
@@ -224,9 +248,15 @@ public class LinkedList {
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
+		findEnd();
 		while(temp != null) {
 			if(temp.end == 1)
+			{
 				result = true;
+				break;
+			}
+			else
+				temp=temp.next;
 		}
 		return result;
 	}
