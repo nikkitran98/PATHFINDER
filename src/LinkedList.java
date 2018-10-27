@@ -225,9 +225,9 @@ public class LinkedList {
 			temp=temp.next;
 			if(temp.next!=null)
 			temp2=temp.next;
-			
+			else
+			temp2=head;
 		}
-		
 	}
 	
 	public void multCount() {

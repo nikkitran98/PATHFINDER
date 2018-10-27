@@ -155,12 +155,12 @@ public class ControlPanel extends JPanel {
 			else if (event.getSource() == processButton) {
 				// TODO
 				try {
-					if(!list.isConnected()) {
+					/*if(!list.isConnected()) {
 						String message = "All nodes must be connected. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
-					}
-					else if(!list.endExists()) {
+					}*/
+					 if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
