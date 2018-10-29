@@ -68,8 +68,7 @@ public class LinkedList {
 		return result;
 	}
 	
-	// TODO(Nikki)
-	// checks to see the all the nodes are connected to each other
+	// checks to see if the all the nodes are connected to each other
 	public boolean isConnected() {
 		boolean result = false;
 		Node temp = head;
@@ -90,7 +89,7 @@ public class LinkedList {
 		{
 			temp = head;
 			while(temp != null) {
-				if (exists(temp.dependency) && exists(temp.name))
+				if (exists(temp.dependency) && dependant(temp.name))
 					result = true;
 				if(result == false)
 					break;
@@ -103,13 +102,31 @@ public class LinkedList {
 		return result;
 	}
 	
+	public boolean dependant(String dependee) {
+		boolean dependant = false;
+		
+		Node temp = head;
+		
+		while(temp != null) {
+			if ((temp.dependency).equals(dependee)) {
+				dependant = true;
+			}
+			else 
+				temp = temp.next;
+				
+		}
+		
+		return dependant;
+	}
+	
 	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
 		boolean exists = false;							//sets variable exists to false
 		Node temp = head;								//creates a temporary node that is equal to the head
 		while(temp != null) {							//traverses through the linked list
 			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
 				exists = true;							//sets exists to true
-			temp = temp.next;
+			else 
+				temp = temp.next;
 		}
 		
 		// checked to see if something depended on it

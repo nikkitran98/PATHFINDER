@@ -104,25 +104,6 @@ public class ControlPanel extends JPanel {
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
 		
-		// TODO: make action listener to work
-		activityField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				activity = activityField.getText();
-			}
-		});
-		
-		durationField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				duration = Integer.parseInt(durationField.getText());
-			}
-		});
-		
-		dependancyField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dependancy = dependancyField.getText();
-			}
-		});
-		
 	}
 
 	private class ButtonListener implements ActionListener {
@@ -153,14 +134,13 @@ public class ControlPanel extends JPanel {
 				JOptionPane.showMessageDialog(null, "PATHFINDER restarted.");
 			}
 			else if (event.getSource() == processButton) {
-				// TODO
 				try {
-					/*if(!list.isConnected()) {
+					if(!list.isConnected()) {
 						String message = "All nodes must be connected. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
-					}*/
-					 if(!list.endExists()) {
+					}
+					else if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
@@ -183,22 +163,6 @@ public class ControlPanel extends JPanel {
 		   	
 		       	 		output.setText(result);
 					}
-//					list.dupCount();
-//					list.multCount();
-//					list.findEnd();
-//					Node[][] myArray = new Node[count][count];
-//					for(int r = 0; r < count; r++) {
-//						for(int c = 0; c < count; c++) {
-//							myArray[r][c] = null;
-//						}
-//					}
-//					
-//					Node[][] newArray = new Node[count][count];
-//					newArray = list.process(myArray, count, count);
-//					
-//					String result = list.makePath(newArray, count, count);
-//	   	
-//	       	 		output.setText(result);
 				}
 				catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Error. Please try again. ");
