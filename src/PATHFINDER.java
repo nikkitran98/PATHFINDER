@@ -14,12 +14,6 @@ public class PATHFINDER extends JApplet {
 	   {		  
 		  A = new LinkedList();
 		  panel = new ControlPanel(A, WIDTH, HEIGHT);
-	       
-//	      JFrame frame = new JFrame ("PATHFINDER");
-//	      frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-//	      frame.getContentPane().add(panel);
-//	      frame.pack();
-//	      frame.setVisible(true);
 	      
 	      getContentPane().add(panel);
 	      setSize (WIDTH, HEIGHT);

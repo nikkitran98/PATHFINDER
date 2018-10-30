@@ -1,13 +1,11 @@
-// Rebecca
-import java.util.*;
 public class LinkedList {
 	private Node head;		//creates a head of type Node
 	private int count=0;
-	
+
 	public LinkedList() {		//Default LinkedList constructor
 		head = new Node();//creates a new node
 	}
-	
+
 	public void add(String name, String dependency, int duration) {	//method to add a new node
 		if(head.name == null) {											//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
@@ -21,7 +19,7 @@ public class LinkedList {
 		}
 		count++;
 	}
-	
+
 	public Node getEnd() {
 		Node result = new Node();
 		Node temp = head;
@@ -43,7 +41,7 @@ public class LinkedList {
 		}
 		return result;
 	}
-	
+
 	public Node getNext(Node nw) {
 		Node result = new Node();			//instantiates blank string
 		Node temp = head;			//sets a temp node equal to head
@@ -67,29 +65,69 @@ public class LinkedList {
 		}
 		return result;
 	}
-	
-	// TODO(Nikki)
+
+	// checks to see if the all the nodes are connected to each other
 	public boolean isConnected() {
 		boolean result = false;
 		Node temp = head;
+
+		// test case 1: if a node doesn't depend on anything, other
+		// nodes must depend on it assuming it is the starter node
 		while(temp != null) {
 			result = exists(temp.dependency);
-			if(result = false)
+			if(result == false)
 				break;
-			temp = temp.next;
+			else
+				temp = temp.next;
 		}
+
+		// test case 2: a node must depend on something and something
+		// must depend on it
+		if(result)
+		{
+			temp = head;
+			while(temp != null) {
+				if (exists(temp.dependency) && dependent(temp.name))
+					result = true;
+				if(result == false)
+					break;
+				else
+					temp = temp.next;
+			}
+
+		}
+
 		return result;
 	}
-	
+
+	// checks if another node depends on the dependee
+	public boolean dependent(String dependee) {
+		boolean dependent = false;
+
+		Node temp = head;
+
+		while(temp != null) {
+			if ((temp.dependency).equals(dependee)) {
+				dependent = true;
+			}
+			else
+				temp = temp.next;
+		}
+
+		return dependent;
+	}
+
 	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
 		boolean exists = false;							//sets variable exists to false
 		Node temp = head;								//creates a temporary node that is equal to the head
 		while(temp != null) {							//traverses through the linked list
-			if((temp.name).equals(dependency)  == true)	//if the name at that Node is equal to the specified name
-				exists = true;							//change exists to true
-			temp = temp.next;
+			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
+				exists = true;							//sets exists to true
+			else
+				temp = temp.next;
 		}
-		
+
+		// checked to see if something depended on it
 		if(dependency == "0") {
 			temp = head;
 			while(temp != null) {
@@ -100,7 +138,7 @@ public class LinkedList {
 		}
 		return exists;					//returns the result
 	}
-	
+
 	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
 		Node temp = head;
 		while(temp.next != null)
@@ -117,7 +155,7 @@ public class LinkedList {
 			temp = temp.next;
 		}
 	}
-	
+
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
 		String name = nw.dependency;
@@ -134,7 +172,7 @@ public class LinkedList {
 			temp = temp.next;
 		}
 	}
-	
+
 	public void changeDup(Node nw) {
 		Node temp = head;
 		while(temp != null) {
@@ -143,18 +181,18 @@ public class LinkedList {
 			temp = temp.next;
 		}
 	}
-	
+
 	public void deleteList() {
 		head = new Node();
 	}
-	
+
 	public Node[][] process(Node[][] myArray, int rows, int columns){
 		Node temp = head;
 		while(temp != null) {
 			updateCount(temp, temp);
 			temp = temp.next;
 		}
-		
+
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
@@ -163,13 +201,13 @@ public class LinkedList {
 				else
 					if((exists((myArray[r][c-1]).name)))
 						myArray[r][c] = getNext(myArray[r][c-1]);
-					else 
+					else
 						break;
 			}
 		}
 		return myArray;
 	}
-	
+
 	public void findEnd(){
 		Node temp =head;
 		Node temp2=head.next;
@@ -202,11 +240,11 @@ public class LinkedList {
 			temp=temp.next;
 			if(temp.next!=null)
 			temp2=temp.next;
-			
+			else
+			temp2=head;
 		}
-		
 	}
-	
+
 	public void multCount() {
 		Node temp = head;
 		while(temp.next != null) {
@@ -221,18 +259,24 @@ public class LinkedList {
 			temp = temp.next;
 		}
 	}
-	
+
 	// TODO(Nikki)
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
+		findEnd();
 		while(temp != null) {
 			if(temp.end == 1)
+			{
 				result = true;
+				break;
+			}
+			else
+				temp=temp.next;
 		}
 		return result;
 	}
-	
+
 	public void print(){
 		Node temp=head;
 		while(temp!=null){
@@ -247,10 +291,10 @@ public class LinkedList {
 		}
 		System.out.print("\n");
 	}
-	
+
 	public void order(ArrayList<Node> list,int total){
 		Node temp;
-		
+
 		for(int i =0;i<total;i++){
 			for(int j=i+1;j<total;j++){
 				if(list.get(j).getDuration()>list.get(i).getDuration()){
@@ -290,13 +334,13 @@ public class LinkedList {
 			total++;
 		}
 		order(paths,total);
-		
+
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
 			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
 			pathNum++;
 		}
-		
+
 		return result;
 	}
 
