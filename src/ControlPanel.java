@@ -140,7 +140,7 @@ public class ControlPanel extends JPanel {
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
-					else if(!list.endExists()) {
+					if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
