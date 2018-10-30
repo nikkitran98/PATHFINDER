@@ -5,13 +5,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PATHFINDER extends JApplet {
+	
+	//================================================================================
+    // Properties
+    //================================================================================
 	  private final int WIDTH = 390;
 	  private final int HEIGHT = 390;
 	  private ControlPanel panel;
 	  static LinkedList A;
 
-	  public void init()
-	   {		  
+	//================================================================================
+	// Initializer
+	//================================================================================
+	  public void init() {		  
 		  A = new LinkedList();
 		  panel = new ControlPanel(A, WIDTH, HEIGHT);
 	      
@@ -19,6 +25,9 @@ public class PATHFINDER extends JApplet {
 	      setSize (WIDTH, HEIGHT);
 	  }
 
+	//================================================================================
+	// Main 
+	//================================================================================
 	public static void main (String []args) {
 		int duration = 0;
 		int count = 0;
@@ -36,7 +45,7 @@ public class PATHFINDER extends JApplet {
 			input = reader.next().charAt(0);
 			reader.nextLine();
 
-			switch(input){
+			switch(input) {
 			case 'A':
 				System.out.print("Enter Activity Name: ");
 				name = reader.nextLine();
@@ -46,15 +55,18 @@ public class PATHFINDER extends JApplet {
 				System.out.print("Enter Dependency: ");
 				dependency = reader.nextLine();
 				String[] depList = dependency.split(",");
+				
 				for(int i = 0; i < depList.length; i++) {
 					A.add(name, depList[i], duration);
 				}
 				count++;
 				break;
+				
 			case 'C':
 				A.dupCount();
 				A.multCount();
 				A.findEnd();
+				
 				Node[][] myArray = new Node[count][count];
 				for(int r = 0; r < count; r++) {
 					for(int c = 0; c < count; c++) {
@@ -63,28 +75,34 @@ public class PATHFINDER extends JApplet {
 				}
 				
 				Node[][] newArray = new Node[count][count];
-				
 				newArray = A.process(myArray, count, count);
 				System.out.println(A.makePath(newArray, count, count));
-				
 				break;
+				
 			case 'D':
 				A.deleteList();
 				System.out.println("All paths have been deleted");
 				break;
+				
 			case 'R':
-				A.restart();
+				A.deleteList();
 				break;
+				
 			case 'O':
 				break;
+				
 			case 'Q':
 				break;
+				
 			case '?':
 				break;
 			}
 		}while(input != 'Q');
 	}
 
+	//================================================================================
+    // Print menu
+    //================================================================================
 	public static void printMenu () {
 		System.out.print("Choice\t\tAction\n" +
                 "------\t\t------\n" +

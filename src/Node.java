@@ -1,16 +1,17 @@
-public class Node
-{
-	int duration;
-	int duplicate;
-	int end;
-	int multiple;
-	int pcount;
-	String name;
-	String dependency;
+public class Node {
+	
+	//================================================================================
+    // Properties
+    //================================================================================
+	
+	int duration, duplicate, end, multiple, pcount;
+	String name, dependency;
 	Node next;
 	
-	public Node()
-	{
+	//================================================================================
+    // Base constructor
+    //================================================================================
+	public Node() {
 		next = null;
 		name = null;
 		dependency = null;
@@ -21,8 +22,10 @@ public class Node
 		end = 0;				//checks to see if it is the end
 	}
 	
-	public Node(String name2, String dependency2, int duration2)
-	{
+	//================================================================================
+    // Constructor
+    //================================================================================
+	public Node(String name2, String dependency2, int duration2) {
 		next = null;
 		name = name2;
 		dependency = dependency2;
@@ -31,10 +34,16 @@ public class Node
 		multiple = 0;
 		pcount = 1;
 	}
-	public int getDuration(){
+	
+	//================================================================================
+    // Getters
+    //================================================================================
+	
+	public int getDuration() {
 		return duration;
 	}
-	public String getName(){
+	
+	public String getName() {
 		return name;
 	}
 }

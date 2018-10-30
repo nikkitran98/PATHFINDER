@@ -5,6 +5,9 @@ import javax.swing.event.*;
 
 public class ControlPanel extends JPanel {
 	
+	//================================================================================
+    // Properties
+    //================================================================================
 	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
 	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
 	private JTextField activityField, durationField, dependancyField;
@@ -17,7 +20,9 @@ public class ControlPanel extends JPanel {
 	
 	ButtonListener buttonlistener = new ButtonListener();
 	
-	// constructor to configure panel
+	//================================================================================
+    // Constructor
+    //================================================================================
 	public ControlPanel(LinkedList list, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -106,6 +111,9 @@ public class ControlPanel extends JPanel {
 		
 	}
 
+	//================================================================================
+    // Listener
+    //================================================================================
 	private class ButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent event) {
@@ -115,8 +123,7 @@ public class ControlPanel extends JPanel {
 				try {
 					if(activityField.getText().isEmpty() || dependancyField.getText().isEmpty() || durationField.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Error: please make sure all fields are filled.");
-					}
-					else {
+					} else {
 						list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
 						count++;
 						activityField.setText("");
@@ -190,9 +197,7 @@ public class ControlPanel extends JPanel {
 						+ "completion times to find the most efficient path to project completion. \n"
 						+ "The system itself will take the user inputs, create a \n"
 						+ "network diagram to determine all the paths in the network. \n"
-						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n"
-						+ "Testing"
-						+ "Testing part 2";
+						+ "Our team: Beverly Weinnbrener, Rebecca Reyes, Nikki Tran, Jesse Tutor. \n";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			
