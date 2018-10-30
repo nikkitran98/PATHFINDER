@@ -89,7 +89,7 @@ public class LinkedList {
 		{
 			temp = head;
 			while(temp != null) {
-				if (exists(temp.dependency) && dependant(temp.name))
+				if (exists(temp.dependency) && dependent(temp.name))
 					result = true;
 				if(result == false)
 					break;
@@ -102,21 +102,21 @@ public class LinkedList {
 		return result;
 	}
 	
-	public boolean dependant(String dependee) {
-		boolean dependant = false;
+	// checks if another node depends on the dependee 
+	public boolean dependent(String dependee) {
+		boolean dependent = false;
 		
 		Node temp = head;
 		
 		while(temp != null) {
 			if ((temp.dependency).equals(dependee)) {
-				dependant = true;
+				dependent = true;
 			}
 			else 
 				temp = temp.next;
-				
 		}
-		
-		return dependant;
+	
+		return dependent;
 	}
 	
 	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
