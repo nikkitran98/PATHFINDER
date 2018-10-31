@@ -58,7 +58,7 @@ public class PATHFINDER extends JApplet {
 				count++;
 				break;
 			case 'C':
-				A.dupCount();
+				//A.dupCount();
 				A.multCount();
 				A.findEnd();
 				Node[][] myArray = new Node[count][count];

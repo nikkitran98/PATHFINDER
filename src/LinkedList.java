@@ -52,9 +52,7 @@ public class LinkedList {
 		}
 		else {
 			while(temp != null) {		//while temp is not null
-				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-					if(temp.duplicate == 1)
-						temp.duplicate = -1;
+				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(temp.multiple == 1 && temp.pcount == 1)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 1)
@@ -108,8 +106,8 @@ public class LinkedList {
 			while(ntemp!= null)
 			{
 				if((temp.name).equals(ntemp.name) && temp.dependency != "0") {
-					changeDup(temp);
-					changeDup(ntemp);
+					//changeDup(temp);
+					//changeDup(ntemp);
 				}
 				ntemp = ntemp.next;
 			}
@@ -134,14 +132,14 @@ public class LinkedList {
 		}
 	}
 	
-	public void changeDup(Node nw) {
+	/*public void changeDup(Node nw) {
 		Node temp = head;
 		while(temp != null) {
 			if((temp.name).equals(nw.dependency))
 				temp.duplicate = 1;
 			temp = temp.next;
 		}
-	}
+	}*/
 	
 	public void deleteList() {
 		head = new Node();
