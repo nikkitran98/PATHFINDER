@@ -9,8 +9,8 @@ public class PATHFINDER extends JApplet {
 	//================================================================================
     // Properties
     //================================================================================
-	  private final int WIDTH = 390;
-	  private final int HEIGHT = 390;
+	  private final int WIDTH = 700;
+	  private final int HEIGHT = 500;
 	  private ControlPanel panel;
 	  static LinkedList A;
 

@@ -11,7 +11,7 @@ public class ControlPanel extends JPanel {
 	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
 	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
 	private JTextField activityField, durationField, dependancyField;
-	private JButton addButton, restartButton, processButton, helpButton, aboutButton;
+	private JButton addButton, restartButton, processButton, helpButton, aboutButton, criticalButton;
 	private int width, height;
 	private String activity, dependancy;
 	private int duration, count;
@@ -60,6 +60,7 @@ public class ControlPanel extends JPanel {
 		processButton = new JButton("Process");
 		helpButton = new JButton("?");
 		aboutButton = new JButton("A");
+		criticalButton = new JButton("Critical path");
 		
 		activityPanel.setLayout(new GridLayout(1,2));
 		activityPanel.add(activityLabel);
@@ -78,12 +79,13 @@ public class ControlPanel extends JPanel {
 		top1.add(durationPanel);
 		top1.add(dependancyPanel);
 		
-		top2.setLayout(new GridLayout(1,5));
+		top2.setLayout(new GridLayout(1,6));
 		top2.add(addButton);
 		top2.add(processButton);
 		top2.add(restartButton);
 		top2.add(helpButton);
 		top2.add(aboutButton);
+		top2.add(criticalButton);
 		
 		topPanel.setLayout(new GridLayout(2,1));
 		topPanel.add(top1);
@@ -147,7 +149,7 @@ public class ControlPanel extends JPanel {
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
-					if(!list.endExists()) {
+					else if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
@@ -168,6 +170,8 @@ public class ControlPanel extends JPanel {
 						
 						String result = list.makePath(newArray, count, count);
 		   	
+						// TODO(Nikki): if more than one path is critical, all paths are displayed
+						// otherwise, paths that are not critical should not be displayed
 		       	 		output.setText(result);
 					}
 				}
@@ -176,6 +180,9 @@ public class ControlPanel extends JPanel {
 				}
 				
 				
+			}
+			else if (event.getSource() == criticalButton) {
+				// TODO
 			}
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 

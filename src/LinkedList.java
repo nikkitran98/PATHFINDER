@@ -78,7 +78,7 @@ public class LinkedList {
 		
 		for(int i =0;i<count;i++) {
 			for(int j=0;j<count;j++) {
-				if(temp2.dependency.equals(temp.name))//checks dependency versus name
+				if((temp2.dependency).equals(temp.name))//checks dependency versus name
 					break;
 				// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
 				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
