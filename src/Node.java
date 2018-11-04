@@ -29,7 +29,7 @@ public class Node
 		duration = duration2;
 		duplicate = 0;
 		multiple = 0;
-		pcount = 1;
+		pcount = 0;
 	}
 	public int getDuration(){
 		return duration;

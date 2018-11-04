@@ -184,7 +184,7 @@ public class ControlPanel extends JPanel {
 //		   	
 //		       	 		output.setText(result);
 //					}
-					list.dupCount();
+					//list.dupCount();
 					list.multCount();
 					list.findEnd();
 					Node[][] myArray = new Node[count][count];
@@ -210,7 +210,7 @@ public class ControlPanel extends JPanel {
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
 						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
-						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “0”. \n" +
+						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter â€œ0â€�. \n" +
 						"If there are more than one dependencies, add them separately.\n" +
 						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
 						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 

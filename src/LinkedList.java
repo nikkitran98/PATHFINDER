@@ -27,11 +27,11 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.pcount == 1) {
+				if(temp.pcount == 0) {
 					temp.end = -1;
 				}
 				else {
-					if(temp.multiple == 1 && temp.pcount == 1)
+					if(temp.multiple == 1 && temp.pcount == 0)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 0)
 						temp.pcount = temp.pcount - 1;
@@ -118,16 +118,25 @@ public class LinkedList {
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
 		String name = nw.dependency;
-		while(temp.next != null) {
-			Node ntemp = temp.next;
-			while(ntemp != null) {
-				if((ntemp.name).equals(name) && (temp.name).equals(name)) {
-					current.pcount = (current.pcount) + 1;
-					updateCount(current, temp);
-					updateCount(current, ntemp);
+		while(temp != null) {
+			if(temp.name == current.name)
+				break;
+			temp = temp.next;
+		}
+		while(temp != null){
+			if(temp.name.equals(name) && temp.multiple == 1 && temp.next != null){
+				Node ntemp = temp.next;
+				while(ntemp != null){
+					if(ntemp.name.equals(name)){
+						current.pcount = current.pcount + 2;
+						updateCount(current, ntemp);
+						updateCount(current, temp);
+					}
+					ntemp = ntemp.next;
 				}
-				ntemp = ntemp.next;
 			}
+			else if (temp.name.equals(name) && temp.multiple == 0)
+				updateCount(current, temp);
 			temp = temp.next;
 		}
 	}
