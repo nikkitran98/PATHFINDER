@@ -98,7 +98,7 @@ public class LinkedList {
 		return exists;					//returns the result
 	}
 	
-	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
+	/*public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
 		Node temp = head;
 		while(temp.next != null)
 		{
@@ -113,7 +113,7 @@ public class LinkedList {
 			}
 			temp = temp.next;
 		}
-	}
+	}*/
 	
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
