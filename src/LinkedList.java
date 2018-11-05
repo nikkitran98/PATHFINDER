@@ -41,21 +41,6 @@ public class LinkedList {
 	//================================================================================
     // Process
     //================================================================================
-	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
-		Node temp = head;
-		
-		while(temp.next != null) {
-			Node ntemp = temp.next;
-			while(ntemp!= null) {
-				if((temp.name).equals(ntemp.name) && temp.dependency != "0") {
-					changeDup(temp);
-					changeDup(ntemp);
-				}
-				ntemp = ntemp.next;
-			}
-			temp = temp.next;
-		}
-	}
 	
 	public void multCount() {
 		Node temp = head;
@@ -182,10 +167,11 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.pcount == 1) {
+				if(temp.pcount == 0) {
 					temp.end = -1;
-				} else {
-					if(temp.multiple == 1 && temp.pcount == 1)
+				}
+				else {
+					if(temp.multiple == 1 && temp.pcount == 0)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 0)
 						temp.pcount = temp.pcount - 1;
@@ -201,14 +187,12 @@ public class LinkedList {
 	public Node getNext(Node nw) {
 		Node result = new Node();			//instantiates blank string
 		Node temp = head;			//sets a temp node equal to head
-		
 		if((nw.name) == null) {
 			return result;
-		} else {
+		}
+		else {
 			while(temp != null) {		//while temp is not null
-				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-					if(temp.duplicate == 1)
-						temp.duplicate = -1;
+				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(temp.multiple == 1 && temp.pcount == 1)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 1)
@@ -257,16 +241,6 @@ public class LinkedList {
 				}
 				ntemp = ntemp.next;
 			}
-			temp = temp.next;
-		}
-	}
-
-	public void changeDup(Node nw) {
-		Node temp = head;
-		
-		while(temp != null) {
-			if((temp.name).equals(nw.dependency))
-				temp.duplicate = 1;
 			temp = temp.next;
 		}
 	}
