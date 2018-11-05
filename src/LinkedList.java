@@ -114,12 +114,11 @@ public class LinkedList {
 	
 	public Node[][] process(Node[][] myArray, int rows, int columns) {
 		Node temp = head;
-		
 		while(temp != null) {
 			updateCount(temp, temp);
 			temp = temp.next;
 		}
-
+		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
@@ -128,7 +127,7 @@ public class LinkedList {
 				else
 					if((exists((myArray[r][c-1]).name)))
 						myArray[r][c] = getNext(myArray[r][c-1]);
-					else
+					else 
 						break;
 			}
 		}
@@ -227,15 +226,12 @@ public class LinkedList {
 	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
 		boolean exists = false;							//sets variable exists to false
 		Node temp = head;								//creates a temporary node that is equal to the head
-		
 		while(temp != null) {							//traverses through the linked list
-			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
-				exists = true;							//sets exists to true
-			else
-				temp = temp.next;
+			if((temp.name).equals(dependency)  == true)	//if the name at that Node is equal to the specified name
+				exists = true;							//change exists to true
+			temp = temp.next;
 		}
-
-		// checked to see if something depended on it
+		
 		if(dependency == "0") {
 			temp = head;
 			while(temp != null) {
@@ -244,7 +240,7 @@ public class LinkedList {
 				}
 			}
 		}
-		return exists;					//returns the result
+		return exists;						//returns the result
 	}
 
 	public void updateCount(Node current, Node nw) {
