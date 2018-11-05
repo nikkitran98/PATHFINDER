@@ -61,9 +61,17 @@ public class PATHFINDER extends JApplet {
 				}
 				count++;
 				break;
-				
+			case 'B':
+				System.out.print("Enter Activity Name you want to change duration on: ");
+				name = reader.nextLine();
+				System.out.print("Enter New Activity Duration: ");
+				duration = reader.nextInt();
+				reader.nextLine();
+				A.changeDuration(name, duration);
+				System.out.println("duration changed");
+				break;	
 			case 'C':
-				A.dupCount();
+				//A.dupCount();
 				A.multCount();
 				A.findEnd();
 				
@@ -83,6 +91,7 @@ public class PATHFINDER extends JApplet {
 				A.deleteList();
 				System.out.println("All paths have been deleted");
 				break;
+			case 'E':
 				
 			case 'R':
 				A.deleteList();
@@ -90,7 +99,10 @@ public class PATHFINDER extends JApplet {
 				
 			case 'O':
 				break;
-				
+			case'P':
+				System.out.print(A.criticalPath());
+				break;
+
 			case 'Q':
 				break;
 				
@@ -107,7 +119,9 @@ public class PATHFINDER extends JApplet {
 		System.out.print("Choice\t\tAction\n" +
                 "------\t\t------\n" +
                 "A\t\tAdd\n" +
+                "B\t\tChange Duration\n" +
                 "C\t\tCalculate\n" +
+                "P\t\tDisplay Critical Path\n" +
                 "D\t\tDelete\n" +
                 "R\t\tRestart\n" +
                 "O\t\tAbout\n" +

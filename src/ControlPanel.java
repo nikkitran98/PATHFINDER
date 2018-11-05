@@ -155,7 +155,7 @@ public class ControlPanel extends JPanel {
 						list.deleteList();
 					}
 					else {
-						list.dupCount();
+						//list.dupCount();
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];

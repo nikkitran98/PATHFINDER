@@ -6,7 +6,7 @@ public class LinkedList {
     //================================================================================
 	private Node head;		
 	private int count = 0;
-
+	private String cPath="";
 	//================================================================================
     // Constructor
     //================================================================================
@@ -154,7 +154,15 @@ public class LinkedList {
 			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
 			pathNum++;
 		}
-
+		int maxDur = paths.get(0).getDuration();
+		pathNum=1;
+		cPath = "";
+		for(int i =0;i<total;i++) {
+			if( paths.get(i).getDuration()==maxDur){
+				cPath += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+				pathNum++;
+			}
+		}
 		return result;
 	}
 	
@@ -344,5 +352,18 @@ public class LinkedList {
 		}
 		return result;
 	}
-	
+	public String criticalPath(){
+		return cPath;
+	}
+	public void changeDuration(String name, int newDuration)
+	{
+		Node temp = head;
+		while(temp !=null)
+		{
+			if (temp.name.equals(name))
+				temp.duration=newDuration;
+			temp=temp.next;
+			
+		}
+	}
 }
