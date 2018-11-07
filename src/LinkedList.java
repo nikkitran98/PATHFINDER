@@ -98,33 +98,28 @@ public class LinkedList {
 		return exists;					//returns the result
 	}
 	
-	/*public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
-		Node temp = head;
-		while(temp.next != null)
-		{
-			Node ntemp = temp.next;
-			while(ntemp!= null)
-			{
-				if((temp.name).equals(ntemp.name) && temp.dependency != "0") {
-					//changeDup(temp);
-					//changeDup(ntemp);
-				}
-				ntemp = ntemp.next;
-			}
-			temp = temp.next;
-		}
-	}*/
-	
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
 		String name = nw.dependency;
-		while(temp != null) {
-			if(temp.name == current.name)
-				break;
-			temp = temp.next;
-		}
+
 		while(temp != null){
-			if(temp.name.equals(name) && temp.multiple == 1 && temp.next != null){
+			if(temp.name.equals(name) && temp.multiple == 1 && current != nw)
+			{
+				Node ntemp = temp.next;
+				while(ntemp != null){
+					if(ntemp.name.equals(name)){
+						current.pcount = current.pcount + 2;
+						count++;
+						updateCount(current, ntemp);
+						updateCount(current, temp);
+					}
+					ntemp = ntemp.next;
+				}
+			}
+			else if(temp.name.equals(name) && temp.multiple == 0 && current != nw)
+				updateCount(current,temp);
+			temp = temp.next;
+			/*if(temp.name.equals(name) && temp.multiple == 1 && temp.next != null && current != nw){
 				Node ntemp = temp.next;
 				while(ntemp != null){
 					if(ntemp.name.equals(name)){
@@ -137,18 +132,9 @@ public class LinkedList {
 			}
 			else if (temp.name.equals(name) && temp.multiple == 0)
 				updateCount(current, temp);
-			temp = temp.next;
+			temp = temp.next;*/
 		}
 	}
-	
-	/*public void changeDup(Node nw) {
-		Node temp = head;
-		while(temp != null) {
-			if((temp.name).equals(nw.dependency))
-				temp.duplicate = 1;
-			temp = temp.next;
-		}
-	}*/
 	
 	public void deleteList() {
 		head = new Node();
