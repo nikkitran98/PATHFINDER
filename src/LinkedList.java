@@ -4,20 +4,20 @@ public class LinkedList {
 	//================================================================================
     // Properties
     //================================================================================
-	private Node head;		
+	private Node head;
 	private int count = 0;
-
+	private String cPath="";
 	//================================================================================
     // Constructor
     //================================================================================
-	public LinkedList() {		
+	public LinkedList() {
 		head = new Node();//creates a new node
 	}
 
 	//================================================================================
     // Add
     //================================================================================
-	public void add(String name, String dependency, int duration) {	
+	public void add(String name, String dependency, int duration) {
 		if(head.name == null) {										//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
 		}
@@ -30,33 +30,18 @@ public class LinkedList {
 		}
 		count++;
 	}
-	
+
 	//================================================================================
     // Restart
     //================================================================================
 	public void deleteList() {
 		head = new Node();
 	}
-	
+
 	//================================================================================
     // Process
     //================================================================================
-	public void dupCount() {		//changing the duplicate tag to 1 if they have the same dependency
-		Node temp = head;
-		
-		while(temp.next != null) {
-			Node ntemp = temp.next;
-			while(ntemp!= null) {
-				if((temp.name).equals(ntemp.name) && temp.dependency != "0") {
-					changeDup(temp);
-					changeDup(ntemp);
-				}
-				ntemp = ntemp.next;
-			}
-			temp = temp.next;
-		}
-	}
-	
+
 	public void multCount() {
 		Node temp = head;
 		while(temp.next != null) {
@@ -71,11 +56,11 @@ public class LinkedList {
 			temp = temp.next;
 		}
 	}
-	
+
 	public void findEnd() {
 		Node temp =head;
 		Node temp2=head.next;
-		
+
 		for(int i =0;i<count;i++) {
 			for(int j=0;j<count;j++) {
 				if((temp2.dependency).equals(temp.name))//checks dependency versus name
@@ -93,7 +78,7 @@ public class LinkedList {
 				if(temp.end == 1)
 					break;
 			}
-			
+
 			if(temp.end == 1) {
 				Node change = head;
 				while(change != null) {
@@ -111,10 +96,9 @@ public class LinkedList {
 			temp2=head;
 		}
 	}
-	
+
 	public Node[][] process(Node[][] myArray, int rows, int columns) {
 		Node temp = head;
-		
 		while(temp != null) {
 			updateCount(temp, temp);
 			temp = temp.next;
@@ -134,7 +118,7 @@ public class LinkedList {
 		}
 		return myArray;
 	}
-	
+
 	public String makePath(Node[][] myArray, int rows, int columns) {
 		int time = 0;
 		int total =0;
@@ -142,7 +126,7 @@ public class LinkedList {
 		String result = "";
 		ArrayList<Node> paths = new ArrayList<Node>();
 		Node temp;
-		
+
 		for(int r=0;r<rows;r++) {
 			if(myArray[r][0].end==0)
 				break;
@@ -170,10 +154,18 @@ public class LinkedList {
 			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
 			pathNum++;
 		}
-
+		int maxDur = paths.get(0).getDuration();
+		pathNum=1;
+		cPath = "";
+		for(int i =0;i<total;i++) {
+			if( paths.get(i).getDuration()==maxDur){
+				cPath += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+				pathNum++;
+			}
+		}
 		return result;
 	}
-	
+
 
 	//================================================================================
     // Intermediate functions
@@ -183,10 +175,11 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.pcount == 1) {
+				if(temp.pcount == 0) {
 					temp.end = -1;
-				} else {
-					if(temp.multiple == 1 && temp.pcount == 1)
+				}
+				else {
+					if(temp.multiple == 1 && temp.pcount == 0)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 0)
 						temp.pcount = temp.pcount - 1;
@@ -202,14 +195,12 @@ public class LinkedList {
 	public Node getNext(Node nw) {
 		Node result = new Node();			//instantiates blank string
 		Node temp = head;			//sets a temp node equal to head
-		
 		if((nw.name) == null) {
 			return result;
-		} else {
+		}
+		else {
 			while(temp != null) {		//while temp is not null
-				if((nw.dependency).equals(temp.name) && temp.duplicate != -1 && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-					if(temp.duplicate == 1)
-						temp.duplicate = -1;
+				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(temp.multiple == 1 && temp.pcount == 1)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 1)
@@ -227,14 +218,12 @@ public class LinkedList {
 	public boolean exists(String dependency) {			//method to see if the name exists in the linked list
 		boolean exists = false;							//sets variable exists to false
 		Node temp = head;								//creates a temporary node that is equal to the head
-		
 		while(temp != null) {							//traverses through the linked list
 			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
 				exists = true;							//sets exists to true
 			temp = temp.next;
 		}
 
-		// checked to see if something depended on it
 		if(dependency == "0") {
 			temp = head;
 			while(temp != null) {
@@ -243,13 +232,13 @@ public class LinkedList {
 				}
 			}
 		}
-		return exists;					//returns the result
+		return exists;						//returns the result
 	}
 
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
 		String name = nw.dependency;
-		
+
 		while(temp.next != null) {
 			Node ntemp = temp.next;
 			while(ntemp != null) {
@@ -264,27 +253,17 @@ public class LinkedList {
 		}
 	}
 
-	public void changeDup(Node nw) {
-		Node temp = head;
-		
-		while(temp != null) {
-			if((temp.name).equals(nw.dependency))
-				temp.duplicate = 1;
-			temp = temp.next;
-		}
-	}
-
 	public void print() {
 		Node temp=head;
-		
+
 		while(temp!=null) {
 			System.out.print(temp.name+"||");
 			temp=temp.next;
 		}
-		
+
 		System.out.print("\n");
 		temp=head;
-		
+
 		while(temp!=null) {
 			System.out.print(temp.end+"||");
 			temp=temp.next;
@@ -305,7 +284,7 @@ public class LinkedList {
 			}
 		}
 	}
-	
+
 	//================================================================================
     // Error checking
     //================================================================================
@@ -331,10 +310,10 @@ public class LinkedList {
 
 		// test case 2: a node must depend on something and something
 		// must depend on it
-		
+
 		// test case 2: there cannot be multiple ends or else it's
 		// not fully connected
-		
+
 //		if(result) {
 //			temp = head;
 //			while(temp != null) {
@@ -347,7 +326,7 @@ public class LinkedList {
 //			}
 //
 //		}
-		
+
 		if(result) {
 			temp = head;
 			findEnd();
@@ -375,13 +354,13 @@ public class LinkedList {
 		while(temp != null) {
 			if ((temp.dependency).equals(dependee)) {
 				dependent = true;
-				break; 
+				break;
 			}
 			temp = temp.next;
 		}
 		return dependent;
 	}
-	
+
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
@@ -395,5 +374,18 @@ public class LinkedList {
 		}
 		return result;
 	}
-	
+	public String criticalPath(){
+		return cPath;
+	}
+	public void changeDuration(String name, int newDuration)
+	{
+		Node temp = head;
+		while(temp !=null)
+		{
+			if (temp.name.equals(name))
+				temp.duration=newDuration;
+			temp=temp.next;
+
+		}
+	}
 }
