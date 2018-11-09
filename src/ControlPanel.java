@@ -8,10 +8,14 @@ public class ControlPanel extends JPanel {
 	//================================================================================
     // Properties
     //================================================================================
-	private JPanel topPanel, top1, top2, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
+	private JPanel topPanel, top1, top2, top3, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
 	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
 	private JTextField activityField, durationField, dependancyField;
-	private JButton addButton, restartButton, processButton, helpButton, aboutButton, criticalButton;
+	private JButton addButton, restartButton, processButton;
+	private JButton helpButton, aboutButton;
+	private JButton criticalButton, changeButton, reportButton;
+	private JScrollPane scrollPane;
+	private JSplitPane pane;
 	private int width, height;
 	private String activity, dependancy;
 	private int duration, count;
@@ -34,6 +38,7 @@ public class ControlPanel extends JPanel {
 		topPanel = new JPanel();
 		top1 = new JPanel();
 		top2 = new JPanel();
+		top3 = new JPanel();
 		activityPanel = new JPanel();
 		durationPanel = new JPanel();
 		dependancyPanel = new JPanel();
@@ -49,7 +54,7 @@ public class ControlPanel extends JPanel {
 		outputDuration = new JLabel("Duration");
 		
 		output = new JTextArea (30,30);
-		JScrollPane scrollPane = new JScrollPane(output);
+		scrollPane= new JScrollPane(output);
 		
 		activityField = new JTextField();
 		durationField = new JTextField();
@@ -60,7 +65,9 @@ public class ControlPanel extends JPanel {
 		processButton = new JButton("Process");
 		helpButton = new JButton("?");
 		aboutButton = new JButton("A");
-		criticalButton = new JButton("Critical path");
+		criticalButton = new JButton("Display critical path");
+		changeButton = new JButton("Change duration");
+		reportButton = new JButton("Create report");
 		
 		activityPanel.setLayout(new GridLayout(1,2));
 		activityPanel.add(activityLabel);
@@ -79,17 +86,22 @@ public class ControlPanel extends JPanel {
 		top1.add(durationPanel);
 		top1.add(dependancyPanel);
 		
-		top2.setLayout(new GridLayout(1,6));
+		top2.setLayout(new GridLayout(1,5));
 		top2.add(addButton);
 		top2.add(processButton);
 		top2.add(restartButton);
 		top2.add(helpButton);
 		top2.add(aboutButton);
-		top2.add(criticalButton);
 		
-		topPanel.setLayout(new GridLayout(2,1));
+		top3.setLayout(new GridLayout(1, 3));
+		top3.add(criticalButton);
+		top3.add(changeButton);
+		top3.add(reportButton);
+		
+		topPanel.setLayout(new GridLayout(3,1));
 		topPanel.add(top1);
 		topPanel.add(top2);
+		topPanel.add(top3);
 		
 		bottom1.setLayout(new GridLayout(1,3));
 		bottom1.add(outputPath);
@@ -101,16 +113,36 @@ public class ControlPanel extends JPanel {
 		bottomPanel.setLayout(new GridLayout(2,1));
 		bottomPanel.add(bottom1);
 		bottomPanel.add(bottom2);
-
-		JSplitPane pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
-		add(pane);
 		
 		addButton.addActionListener(buttonlistener);
 		restartButton.addActionListener(buttonlistener);
 		processButton.addActionListener(buttonlistener);
 		helpButton.addActionListener(buttonlistener);
 		aboutButton.addActionListener(buttonlistener);
+		criticalButton.addActionListener(buttonlistener);
+		changeButton.addActionListener(buttonlistener);
+		reportButton.addActionListener(buttonlistener);
 		
+		activityField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				activity = activityField.getText();
+			}
+		});
+		
+		durationField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				duration = Integer.parseInt(durationField.getText());
+			}
+		});
+		
+		dependancyField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dependancy = dependancyField.getText();
+			}
+		});
+
+		pane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topPanel, bottomPanel);
+		add(pane);
 	}
 
 	//================================================================================
@@ -149,7 +181,7 @@ public class ControlPanel extends JPanel {
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
-					else if(!list.endExists()) {
+					if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
@@ -182,6 +214,12 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
+				// TODO
+			}
+			else if (event.getSource() == changeButton) {
+				// TODO
+			}
+			else if (event.getSource() == reportButton) {
 				// TODO
 			}
 			else if (event.getSource() == helpButton) {

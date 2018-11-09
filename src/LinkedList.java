@@ -84,7 +84,7 @@ public class LinkedList {
 				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
 					temp.end=1;
 				}
-				else{
+				else {
 				    if(temp2.next==null)
 				    	temp2=head;
 				    else
@@ -231,8 +231,7 @@ public class LinkedList {
 		while(temp != null) {							//traverses through the linked list
 			if((temp.name).equals(dependency) == true)	//if the name at that Node is equal to the specified name
 				exists = true;							//sets exists to true
-			else
-				temp = temp.next;
+			temp = temp.next;
 		}
 
 		// checked to see if something depended on it
@@ -314,49 +313,72 @@ public class LinkedList {
 	// checks to see if the all the nodes are connected to each other
 	public boolean isConnected() {
 		boolean result = false;
+		int endCount = 0;
 		Node temp = head;
 
 		// test case 1: if a node doesn't depend on anything, other
 		// nodes must depend on it assuming it is the starter node
 		while(temp != null) {
-			result = exists(temp.dependency);
-			if(result == false)
-				break;
-			else
-				temp = temp.next;
+			// check if it depends on nothing first
+			if (temp.dependency == "0") {
+				// if so, checks to see if something depends on it
+				result = isDependedOn(temp.name);
+				if(result == false)
+					break;
+			}
+			temp = temp.next;
 		}
 
 		// test case 2: a node must depend on something and something
 		// must depend on it
+		
+		// test case 2: there cannot be multiple ends or else it's
+		// not fully connected
+		
+//		if(result) {
+//			temp = head;
+//			while(temp != null) {
+//				if (exists(temp.dependency) && dependent(temp.name))
+//					result = true;
+//				if(result == false)
+//					break;
+//				else
+//					temp = temp.next;
+//			}
+//
+//		}
+		
 		if(result) {
 			temp = head;
+			findEnd();
 			while(temp != null) {
-				if (exists(temp.dependency) && dependent(temp.name))
-					result = true;
-				if(result == false)
-					break;
-				else
-					temp = temp.next;
+				if (temp.end == 1) {
+					endCount++;
+				}
+				temp = temp.next;
 			}
-
+			// checks to see if there are multiple ends
+			if (endCount > 1) {
+				result = false;
+			}
+			else
+				result = true;
 		}
-
 		return result;
 	}
 
 	// checks if another node depends on the dependee
-	public boolean dependent(String dependee) {
+	public boolean isDependedOn(String dependee) {
 		boolean dependent = false;
 		Node temp = head;
 
 		while(temp != null) {
 			if ((temp.dependency).equals(dependee)) {
 				dependent = true;
+				break; 
 			}
-			else
-				temp = temp.next;
+			temp = temp.next;
 		}
-
 		return dependent;
 	}
 	
@@ -369,8 +391,7 @@ public class LinkedList {
 				result = true;
 				break;
 			}
-			else
-				temp=temp.next;
+			temp=temp.next;
 		}
 		return result;
 	}
