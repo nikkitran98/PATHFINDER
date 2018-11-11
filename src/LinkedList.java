@@ -123,13 +123,11 @@ public class LinkedList {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
 					myArray[r][0] = getEnd();
-					System.out.print(myArray[r][0].name + " --> ");
 				}
 				else
 					if((exists((myArray[r][c-1]).name)))
 					{
 						myArray[r][c] = getNext(myArray[r][c-1]);
-						System.out.print(myArray[r][c].name + " --> ");
 					}
 					else 
 						break;

@@ -16,11 +16,11 @@ public class Node {
 		name = null;
 		dependency = null;
 		duration = 0;
-		duplicate = 0;			//checks to see if one activity has multiple dependencies
+		duplicate = 0;			//the case where two nodes have the same dependency
 		multiple = 0;			//checks to see if there are many of one activity
 		pcount = 0;				//checks to see the path count for that activity
 		end = 0;				//checks to see if it is the end
-		rotate = 0;
+		rotate = 1;
 	}
 	
 	//================================================================================
@@ -33,8 +33,7 @@ public class Node {
 		duration = duration2;
 		duplicate = 0;
 		multiple = 0;
-		pcount = 1;
-		rotate = 0;
+		pcount = 0;
 	}
 	
 	//================================================================================
