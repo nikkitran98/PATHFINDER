@@ -71,7 +71,6 @@ public class PATHFINDER extends JApplet {
 				System.out.println("duration changed");
 				break;	
 			case 'C':
-				//A.dupCount();
 				A.multCount();
 				A.findEnd();
 				

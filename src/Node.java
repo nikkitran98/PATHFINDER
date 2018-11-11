@@ -4,7 +4,7 @@ public class Node {
     // Properties
     //================================================================================
 	
-	int duration, duplicate, end, multiple, pcount;
+	int duration, duplicate, end, multiple, pcount, rotate;
 	String name, dependency;
 	Node next;
 	
@@ -20,6 +20,7 @@ public class Node {
 		multiple = 0;			//checks to see if there are many of one activity
 		pcount = 0;				//checks to see the path count for that activity
 		end = 0;				//checks to see if it is the end
+		rotate = 0;
 	}
 	
 	//================================================================================
@@ -33,6 +34,7 @@ public class Node {
 		duplicate = 0;
 		multiple = 0;
 		pcount = 1;
+		rotate = 0;
 	}
 	
 	//================================================================================
