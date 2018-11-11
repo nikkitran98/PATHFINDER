@@ -17,8 +17,8 @@ public class LinkedList {
 	//================================================================================
     // Add
     //================================================================================
-	public void add(String name, String dependency, int duration) {
-		if(head.name == null) {										//checks to see if the linked list is empty
+	public void add(String name, String dependency, int duration) {	//method to add a new node
+		if(head.name == null) {											//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
 		}
 		else {
@@ -201,8 +201,8 @@ public class LinkedList {
 					temp.pcount = temp.pcount - 1;
 				result = temp;
 				break;
-				}
-			temp = temp.next;
+			}
+		temp = temp.next;
 		}
 		if(result == null)
 			result = new Node();
