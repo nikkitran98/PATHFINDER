@@ -3,6 +3,12 @@ import java.util.List;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class PATHFINDER extends JApplet {
 	
@@ -104,7 +110,32 @@ public class PATHFINDER extends JApplet {
 
 			case 'Q':
 				break;
+			case 'T':
+				String title="";
+				String output="";
+				try {
+				InputStreamReader isr = new InputStreamReader (System.in);
+			    BufferedReader stdin = new BufferedReader (isr);
 				
+				System.out.print("Please enter title for output file");
+		        title= stdin.readLine().trim();
+				FileWriter fw = new FileWriter (title+".txt");
+		        BufferedWriter bw = new BufferedWriter (fw);
+		        PrintWriter outFile = new PrintWriter (bw);
+		 
+		        output+= "Title: "+ title+"\r\n"+A.alphabatized()+A.getOutput();
+		        
+		         outFile.print(output); 
+		        
+
+		        outFile.close();
+				
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
+				break;		
 			case '?':
 				break;
 			}
@@ -121,6 +152,7 @@ public class PATHFINDER extends JApplet {
                 "B\t\tChange Duration\n" +
                 "C\t\tCalculate\n" +
                 "P\t\tDisplay Critical Path\n" +
+                "T\t\tOutput File\n" +
                 "D\t\tDelete\n" +
                 "R\t\tRestart\n" +
                 "O\t\tAbout\n" +

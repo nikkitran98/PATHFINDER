@@ -1,4 +1,5 @@
 import java.util.*;
+import java.text.*;
 
 public class LinkedList {
 	//================================================================================
@@ -7,6 +8,7 @@ public class LinkedList {
 	private Node head;
 	private int count = 0;
 	private String cPath="";
+	private String output="";
 	//================================================================================
     // Constructor
     //================================================================================
@@ -35,6 +37,7 @@ public class LinkedList {
     // Restart
     //================================================================================
 	public void deleteList() {
+		output="";
 		head = new Node();
 	}
 
@@ -142,6 +145,7 @@ public class LinkedList {
 		int total =0;
 		String path = "";
 		String result = "";
+		String dateTime="";
 		ArrayList<Node> paths = new ArrayList<Node>();
 		Node temp;
 
@@ -169,7 +173,7 @@ public class LinkedList {
 
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\r\n";
 			pathNum++;
 		}
 		int maxDur = paths.get(0).getDuration();
@@ -181,6 +185,12 @@ public class LinkedList {
 				pathNum++;
 			}
 		}
+		//output="";
+		dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
+		output+="Created: "+dateTime+"\r\n";
+		output+="Paths and duration: \r\n"+result;
+		
+		//output+=
 		return result;
 	}
 
@@ -456,7 +466,112 @@ public class LinkedList {
 
 		}
 	}
+	public String getOutput(){
+		return output;
+	}
+	public boolean isRepeated(Node checkNode)
+	{
+		Node startNode = head;
+		boolean found = false;
+		System.out.print(startNode.name);
+		while(startNode.name != null)
+		{
+			if (startNode.name.equals(checkNode.name))
+			{
+				found = true;
+				break;
+			}
+			else
+			{
+				if(startNode.next!=null)
+				startNode = startNode.next;
+			}
+		}
+		return found;
+	}
 	
+public String alphabatized()
+{
+
+	// setting up to add node
+	String result="";
+	LinkedList alphabatizedLinkedList = new LinkedList();
+	Node current = alphabatizedLinkedList.head;
+	Node previous = alphabatizedLinkedList.head;
+	Node iterator = head;
+	// iterate through current linked list
+	// turn each node into a temp node
+	while(iterator!=null)
+	{
+		Node temp = new Node();
+		temp.name=iterator.getName();
+		temp.duration=iterator.getDuration();
+		//alphabatizedLinkedList.head;
+		if (alphabatizedLinkedList.isRepeated(temp))
+		{
+		// go to the next node in our current linked list
+		// do not add to our alphabatizedLinkedList
+			iterator=iterator.next;
+		}
+		// add to list in order
+		else
+		{
+			// If there are no node in the list
+			System.out.print(alphabatizedLinkedList.head.name+"\n");
+			System.out.print(temp.name+"\n");
+			if (alphabatizedLinkedList.head == null)
+			{
+				alphabatizedLinkedList.head = temp;
+				alphabatizedLinkedList.head.next = null;
+			}
+			// Adds if node needs to go in front of the 1st node
+			
+			else if ((alphabatizedLinkedList.head.name.compareTo(temp.name)) > 0)
+			{
+				temp.next = alphabatizedLinkedList.head;
+				alphabatizedLinkedList.head = temp;
+			}
+			// Adds in all other situations
+			else
+			{
+				// Increment current
+				current = current.next;
+				// Goes to end of linked list
+				while(current.next != null)
+				{
+					// Adding if we are at the end of the list
+					if (current.next == null && current.name.compareTo(temp.name) < 0)
+					{
+						current.next = temp;
+						temp.next = null;
+					}
+					// Adds to the middle of the list
+					else if (current.name.compareTo(temp.name) > 0)
+					{
+						temp.next = current;
+						previous.next = temp;
+					}
+					else
+					{
+						previous = previous.next;
+						current = current.next;
+					}
+				}
+				iterator=iterator.next;
+			}
+		}
+		
+	}
+	Node temp2 = alphabatizedLinkedList.head;
+	result+="Activities in ALphabetic Order:\r\n";
+	while(temp2!=null)
+	{
+		result+= "Activity Name: "+temp2.name+"Duration: "+temp2.duration+"\r\n";
+		temp2=temp2.next;
+	}
+	alphabatizedLinkedList.print();
+	return result;
+}
 	//DELETE
 	public void dupCount() {
 		
