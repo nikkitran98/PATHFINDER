@@ -23,24 +23,35 @@ public class LinkedList {
 	}
 	
 	public Node getEnd() {
-		Node result = new Node();
+		Node result = null;
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.multiple == 1 && temp.pcount == 0)
-					temp.multiple = -1;
-				else if(temp.multiple == 1 && temp.pcount > 0)
-					temp.pcount = temp.pcount - 1;
-				result = temp;
-				break;
-			}
+					/*if(temp.multiple == 1 && temp.rotate == 1 || temp.multiple == 0) {
+						if(temp.rotate == 1) {
+							temp.rotate = 0;*/
+							if(temp.multiple == 1 && temp.pcount == 1)
+								temp.multiple = -1;
+							else if(temp.multiple == 1 && temp.pcount > 1)
+								temp.pcount = temp.pcount - 1;
+						//}
+						result = temp;
+						break;
+				}
+					/*else if (temp.multiple == 1 && temp.rotate == 0) 
+						temp.rotate = 1;*/
+				/*else if(temp.rotate == 0)
+					temp.rotate = 1;*/
 			temp = temp.next;
 		}
+		if(result == null)
+			result = new Node();
 		return result;
 	}
 	
+	
 	public Node getNext(Node nw) {
-		Node result = new Node();			//instantiates blank string
+		Node result = null;			//instantiates blank string
 		Node temp = head;			//sets a temp node equal to head
 		if((nw.name) == null) {
 			return result;
@@ -48,16 +59,34 @@ public class LinkedList {
 		else {
 			while(temp != null) {		//while temp is not null
 				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-					if(temp.multiple == 1 && temp.pcount == 1)
+					if(result == null) {
+						if(temp.multiple == 1 && temp.rotate == 1 || temp.multiple == 0) {
+							if(temp.rotate == 1) {
+								temp.rotate = 0;
+								if(temp.pcount == 1)
+									temp.multiple = -1;
+								else if (temp.pcount > 1)
+									temp.pcount = temp.pcount - 1;
+							}
+							result = temp;
+						}
+						else if(temp.rotate == 0)
+								temp.rotate = 1;
+					}
+					else if(temp.rotate == 0)
+						temp.rotate = 1;
+				}
+					/*if(temp.multiple == 1 && temp.pcount == 1)
 						temp.multiple = -1;
 					else if(temp.multiple == 1 && temp.pcount > 1)
 						temp.pcount = temp.pcount - 1;
 					result = temp;
-					break;
-				}
-				temp = temp.next;
+					break;*/
+			temp = temp.next;
 			}
 		}
+		if (result == null)
+			result = new Node();
 		return result;
 	}
 	
@@ -122,9 +151,23 @@ public class LinkedList {
 	
 	public Node[][] calculate(Node[][] myArray, int rows, int columns){
 		Node temp = head;
+		setRotate();
 		while(temp != null) {
 			updateCount(temp, temp);
 			setFork(temp);
+			temp = temp.next;
+		}
+		
+		temp = head;
+		while(temp != null) {
+			if(temp.multiple == 1 && temp.pcount == 0) {
+				temp.pcount = (end().pcount)/2;
+			}
+			else if(temp.multiple == 0 && end().pcount == 0) {
+				temp.multiple = 1;
+				temp.pcount = 1;
+				temp.rotate = 1;
+			}
 			temp = temp.next;
 		}
 		
@@ -132,17 +175,18 @@ public class LinkedList {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
 					myArray[r][0] = getEnd();
-					System.out.println(myArray[r][0].name);
+					System.out.print(myArray[r][0].name + " --> ");
 				}
 				else
 					if((exists((myArray[r][c-1]).name)))
 					{
 						myArray[r][c] = getNext(myArray[r][c-1]);
-						System.out.println(myArray[r][c].name);
+						System.out.print(myArray[r][c].name + " --> ");
 					}
 					else 
 						break;
 			}
+			System.out.println();
 		}
 		return myArray;
 	}
@@ -288,6 +332,26 @@ public class LinkedList {
 		if(fork > 1) {
 			node.pcount = node.pcount + fork;
 		}
+	}
+	
+	public void setRotate() {
+		Node temp = head;
+		while(temp != null) {
+			if(temp.multiple == 1 && temp.end != 1) 
+				temp.rotate = 1;
+			temp = temp.next;
+		}
+	}
+	
+	public Node end() {
+		Node result = new Node();
+		Node temp = head;
+		while(temp != null) {
+			if(temp.end == 1)
+				result = temp;
+			temp = temp.next;
+		}
+		return result;
 	}
 
 	public void restart(){

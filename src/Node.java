@@ -5,6 +5,7 @@ public class Node
 	int end;
 	int multiple;
 	int pcount;
+	int rotate;
 	String name;
 	String dependency;
 	Node next;
@@ -19,6 +20,7 @@ public class Node
 		multiple = 0;			//checks to see if there are many of one activity
 		pcount = 0;				//checks to see the path count for that activity
 		end = 0;				//checks to see if it is the end
+		rotate = 1;
 	}
 	
 	public Node(String name2, String dependency2, int duration2)

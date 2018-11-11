@@ -53,7 +53,7 @@ public class PATHFINDER extends JApplet {
 				dependency = reader.nextLine();
 				String[] depList = dependency.split(",");
 				for(int i = 0; i < depList.length; i++) {
-					A.add(name, depList[i], duration);
+					A.add(name, dependency, duration);
 				}
 				count++;
 				break;
