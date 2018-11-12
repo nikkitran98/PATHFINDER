@@ -1,6 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 import javax.swing.event.*;
 
 public class ControlPanel extends JPanel {
@@ -8,8 +15,8 @@ public class ControlPanel extends JPanel {
 	//================================================================================
     // Properties
     //================================================================================
-	private JPanel topPanel, top1, top2, top3, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
-	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
+	private JPanel topPanel, top1, top2, top3, activityPanel, durationPanel, dependancyPanel, bottomPanel;
+	private JLabel activityLabel, durationLabel, dependancyLabel;
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, processButton;
 	private JButton helpButton, aboutButton;
@@ -43,17 +50,13 @@ public class ControlPanel extends JPanel {
 		durationPanel = new JPanel();
 		dependancyPanel = new JPanel();
 		bottomPanel = new JPanel();
-		bottom1 = new JPanel();
-		bottom2 = new JPanel();
 		
 		activityLabel = new JLabel("Activity Name: ");
 		durationLabel = new JLabel("Activity Duration: ");
 		dependancyLabel = new JLabel("Activity Dependencies: ");
-		outputPath = new JLabel("Paths");
-		outputDependancy = new JLabel("Path Dependencies");
-		outputDuration = new JLabel("Duration");
 		
-		output = new JTextArea (30,30);
+		output = new JTextArea (15,56);
+		
 		scrollPane= new JScrollPane(output);
 		
 		activityField = new JTextField();
@@ -103,16 +106,7 @@ public class ControlPanel extends JPanel {
 		topPanel.add(top2);
 		topPanel.add(top3);
 		
-		bottom1.setLayout(new GridLayout(1,3));
-		bottom1.add(outputPath);
-		bottom1.add(outputDependancy);
-		bottom1.add(outputDuration);
-		
-		bottom2.add(scrollPane);
-		
-		bottomPanel.setLayout(new GridLayout(2,1));
-		bottomPanel.add(bottom1);
-		bottomPanel.add(bottom2);
+		bottomPanel.add(scrollPane);
 		
 		addButton.addActionListener(buttonlistener);
 		restartButton.addActionListener(buttonlistener);
@@ -189,6 +183,7 @@ public class ControlPanel extends JPanel {
 						list.deleteList();
 					}
 					else {
+						String s = "Paths\t\t\t" + "Path Dependencies\t\t\t" + "Duration\n";
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];
@@ -203,7 +198,8 @@ public class ControlPanel extends JPanel {
 						
 						String result = list.makePath(newArray, count, count);
 		   	
-		       	 		output.setText(result);
+						s += result;
+		       	 		output.setText(s);
 					}
 				}
 				catch (NumberFormatException e) {
@@ -213,20 +209,45 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
+				String s = "Critical Path(s)\t\t\t" + "Duration\n" +
 				list.criticalPath();
+				output.setText(s);
 			}
 			else if (event.getSource() == changeButton) {
-				// TODO
-//				System.out.print("Enter Activity Name you want to change duration on: ");
-//				name = reader.nextLine();
-//				System.out.print("Enter New Activity Duration: ");
-//				duration = reader.nextInt();
-//				reader.nextLine();
-//				A.changeDuration(name, duration);
-//				System.out.println("duration changed");
+				JTextField field1 = new JTextField();
+				JTextField field2 = new JTextField();
+				
+				Object[] fields = {
+						"Enter activity to be changed:", field1,
+						"Duration:", field2
+				};
+				
+				JOptionPane.showConfirmDialog(null, fields, "", JOptionPane.OK_CANCEL_OPTION);
+				
+				list.changeDuration(field1.getText(), Integer.parseInt(field2.getText()));
 			}
 			else if (event.getSource() == reportButton) {
-				// TODO
+				String title = "";
+				String output="";
+				
+				title = JOptionPane.showInputDialog("Name of the report:", JOptionPane.OK_CANCEL_OPTION);
+				
+				try {
+				FileWriter fw = new FileWriter (title+".txt");
+		        BufferedWriter bw = new BufferedWriter (fw);
+		        PrintWriter outFile = new PrintWriter (bw);
+		        
+		    	LinkedList alphabatizedLinkedList = new LinkedList();
+		    	
+		 
+		        output+= "Title: "+ title+"\r\n"+alphabatizedLinkedList.alphabatized(list)+list.getOutput();
+		        outFile.print(output); 
+		        outFile.close();
+				
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				
 			}
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
