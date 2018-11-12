@@ -63,20 +63,20 @@ public class LinkedList {
 
 		for(int i =0;i<count;i++) {
 			for(int j=0;j<count;j++) {
-				if((temp2.dependency).equals(temp.name))//checks dependency versus name
-					break;
-				// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
-				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
-					temp.end=1;
-				}
-				else {
-				    if(temp2.next==null)
-				    	temp2=head;
-				    else
-				    	temp2=temp2.next;
-				}
-				if(temp.end == 1)
-					break;
+					if((temp2.dependency).equals(temp.name))//checks dependency versus name
+						break;
+					// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
+					else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
+						temp.end=1;
+					}
+					else {
+					    if(temp2.next==null)
+					    	temp2=head;
+					    else
+					    	temp2=temp2.next;
+					}
+					if(temp.end == 1)
+						break;
 			}
 
 			if(temp.end == 1) {
@@ -308,34 +308,33 @@ public class LinkedList {
 			temp = temp.next;
 		}
 
-		// test case 2: a node must depend on something and something
-		// must depend on it
 
 		// test case 2: there cannot be multiple ends or else it's
 		// not fully connected
 
-//		if(result) {
-//			temp = head;
-//			while(temp != null) {
-//				if (exists(temp.dependency) && dependent(temp.name))
-//					result = true;
-//				if(result == false)
-//					break;
-//				else
-//					temp = temp.next;
-//			}
-//
-//		}
-
+		// check to see if there any nodes with the same names
+		// and discount the extras
+		int extras = 0;
 		if(result) {
 			temp = head;
-			findEnd();
+			this.findEnd();
 			while(temp != null) {
 				if (temp.end == 1) {
 					endCount++;
+					//temp2 sees if there's nodes with same name as temp
+					// and will count how many so that we can discount
+					// them later
+					Node temp2 = temp.next;
+					while (temp2 != null) {
+						if (temp.name == temp2.name)
+							extras++;
+						temp2 = temp2.next;
+					}
 				}
 				temp = temp.next;
 			}
+			endCount = endCount - extras;
+			System.out.println(endCount);
 			// checks to see if there are multiple ends
 			if (endCount > 1) {
 				result = false;
@@ -364,7 +363,7 @@ public class LinkedList {
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
-		findEnd();
+		this.findEnd();
 		while(temp != null) {
 			if(temp.end == 1) {
 				result = true;
