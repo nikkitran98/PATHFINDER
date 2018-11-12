@@ -176,18 +176,19 @@ public class ControlPanel extends JPanel {
 			}
 			else if (event.getSource() == processButton) {
 				try {
+					list.findEnd();
+					
 					if(!list.isConnected()) {
 						String message = "All nodes must be connected. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
-					if(!list.endExists()) {
+					else if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
 					else {
-						//list.dupCount();
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];
@@ -202,8 +203,6 @@ public class ControlPanel extends JPanel {
 						
 						String result = list.makePath(newArray, count, count);
 		   	
-						// TODO(Nikki): if more than one path is critical, all paths are displayed
-						// otherwise, paths that are not critical should not be displayed
 		       	 		output.setText(result);
 					}
 				}
@@ -214,10 +213,17 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
-				// TODO
+				list.criticalPath();
 			}
 			else if (event.getSource() == changeButton) {
 				// TODO
+//				System.out.print("Enter Activity Name you want to change duration on: ");
+//				name = reader.nextLine();
+//				System.out.print("Enter New Activity Duration: ");
+//				duration = reader.nextInt();
+//				reader.nextLine();
+//				A.changeDuration(name, duration);
+//				System.out.println("duration changed");
 			}
 			else if (event.getSource() == reportButton) {
 				// TODO

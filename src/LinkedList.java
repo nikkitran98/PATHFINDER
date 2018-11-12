@@ -374,7 +374,7 @@ public class LinkedList {
 		// nodes must depend on it assuming it is the starter node
 		while(temp != null) {
 			// check if it depends on nothing first
-			if (temp.dependency == "0") {
+			if (temp.dependency.equals("0")) {
 				// if so, checks to see if something depends on it
 				result = isDependedOn(temp.name);
 				if(result == false)
@@ -386,22 +386,31 @@ public class LinkedList {
 
 		// test case 2: there cannot be multiple ends or else it's
 		// not fully connected
-
-		// check to see if there any nodes with the same names
-		// and discount the extras
+		
+		
+		// counts how many ends there are
+		// TODO: delete
+		int test = 0;
+		temp = head;
+		while (temp != null) {
+			if(temp.end == 1) {
+				test++;
+			}
+			temp = temp.next;
+		}
+		System.out.println(test);
+		
 		int extras = 0;
 		if(result) {
 			temp = head;
-			this.findEnd();
 			while(temp != null) {
 				if (temp.end == 1) {
 					endCount++;
-					//temp2 sees if there's nodes with same name as temp
-					// and will count how many so that we can discount
-					// them later
+					// check to see if there any nodes with the same names
+					// and discount the extras
 					Node temp2 = temp.next;
 					while (temp2 != null) {
-						if (temp.name == temp2.name)
+						if (temp.name.equals(temp2.name))
 							extras++;
 						temp2 = temp2.next;
 					}
@@ -409,7 +418,11 @@ public class LinkedList {
 				temp = temp.next;
 			}
 			endCount = endCount - extras;
+			
+			// TODO: delete 
+			System.out.println(extras);
 			System.out.println(endCount);
+			
 			// checks to see if there are multiple ends
 			if (endCount > 1) {
 				result = false;
@@ -417,6 +430,7 @@ public class LinkedList {
 			else
 				result = true;
 		}
+		
 		return result;
 	}
 
@@ -434,11 +448,27 @@ public class LinkedList {
 		}
 		return dependent;
 	}
+	
+	public boolean dependant(String dependee) {
+		boolean dependant = false;
+		
+		Node temp = head;
+		
+		while(temp != null) {
+			if ((temp.dependency).equals(dependee)) {
+				dependant = true;
+			}
+			else 
+				temp = temp.next;
+				
+		}
+		
+		return dependant;
+	}
 
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
-		this.findEnd();
 		while(temp != null) {
 			if(temp.end == 1) {
 				result = true;
