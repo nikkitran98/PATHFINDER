@@ -173,7 +173,7 @@ public class LinkedList {
 
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\r\n";
+			result += "Path " + pathNum + "\t\t" + paths.get(i).getName()+"\t\t\t"+paths.get(i).getDuration()+"\r\n";
 			pathNum++;
 		}
 		int maxDur = paths.get(0).getDuration();
@@ -181,7 +181,7 @@ public class LinkedList {
 		cPath = "";
 		for(int i =0;i<total;i++) {
 			if( paths.get(i).getDuration()==maxDur){
-				cPath += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+				cPath += paths.get(i).getName()+"\t\t"+paths.get(i).getDuration()+"\n";
 				pathNum++;
 			}
 		}

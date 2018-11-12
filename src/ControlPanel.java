@@ -172,18 +172,18 @@ public class ControlPanel extends JPanel {
 				try {
 					list.findEnd();
 					
-					if(!list.isConnected()) {
-						String message = "All nodes must be connected. Deleting network diagram...";
-						JOptionPane.showMessageDialog(null, message);
-						list.deleteList();
-					}
-					else if(!list.endExists()) {
+					if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
+					else if(!list.isConnected()) {
+						String message = "All nodes must be connected. Deleting network diagram...";
+						JOptionPane.showMessageDialog(null, message);
+						list.deleteList();
+					}
 					else {
-						String s = "Paths\t\t\t" + "Path Dependencies\t\t\t" + "Duration\n";
+						String s = "Paths\t\t" + "Path Dependencies\t\t" + "Duration\n";
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];
@@ -209,7 +209,7 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
-				String s = "Critical Path(s)\t\t\t" + "Duration\n" +
+				String s = "Critical Path(s)\t\t" + "Duration\n" +
 				list.criticalPath();
 				output.setText(s);
 			}
