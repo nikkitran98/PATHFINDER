@@ -103,6 +103,8 @@ public class PATHFINDER extends JApplet {
 				break;
 				
 			case 'O':
+				A.findEnd();
+				A.print();
 				break;
 			case'P':
 				System.out.print(A.criticalPath());

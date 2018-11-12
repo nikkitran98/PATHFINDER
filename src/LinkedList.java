@@ -69,7 +69,7 @@ public class LinkedList {
 					if((temp2.dependency).equals(temp.name))//checks dependency versus name
 						break;
 					// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
-					else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
+					else if (temp2.name.equals(temp.name)/*&&temp2.dependency.equals(temp.dependency)*/) {
 						temp.end=1;
 					}
 					else {
@@ -89,10 +89,12 @@ public class LinkedList {
 						change.end = 1;
 					change = change.next;
 				}
-				break;
+				
 			}
 			if(temp.next!=null)
 			temp=temp.next;
+			else
+			temp= head;
 			if(temp.next!=null)
 			temp2=temp.next;
 			else
@@ -164,6 +166,7 @@ public class LinkedList {
 				}
 			temp= new Node(path, "", time);
 			paths.add(temp);
+			count--;
 			total++;
 		}
 		order(paths,total);
