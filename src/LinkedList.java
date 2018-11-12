@@ -390,19 +390,6 @@ public class LinkedList {
 		// test case 2: there cannot be multiple ends or else it's
 		// not fully connected
 		
-		
-		// counts how many ends there are
-		// TODO: delete
-		int test = 0;
-		temp = head;
-		while (temp != null) {
-			if(temp.end == 1) {
-				test++;
-			}
-			temp = temp.next;
-		}
-		System.out.println(test);
-		
 		int extras = 0;
 		if(result) {
 			temp = head;
@@ -421,10 +408,6 @@ public class LinkedList {
 				temp = temp.next;
 			}
 			endCount = endCount - extras;
-			
-			// TODO: delete 
-			System.out.println(extras);
-			System.out.println(endCount);
 			
 			// checks to see if there are multiple ends
 			if (endCount > 1) {
@@ -451,23 +434,6 @@ public class LinkedList {
 		}
 		return dependent;
 	}
-	
-	public boolean dependant(String dependee) {
-		boolean dependant = false;
-		
-		Node temp = head;
-		
-		while(temp != null) {
-			if ((temp.dependency).equals(dependee)) {
-				dependant = true;
-			}
-			else 
-				temp = temp.next;
-				
-		}
-		
-		return dependant;
-	}
 
 	public boolean endExists() {
 		boolean result = false;
@@ -482,9 +448,17 @@ public class LinkedList {
 		return result;
 	}
 	
+	//================================================================================
+	// Display Critical Path
+	//================================================================================		
+	
 	public String criticalPath(){
 		return cPath;
 	}
+	
+	//================================================================================
+	// Change Duration
+	//================================================================================	
 	
 	public void changeDuration(String name, int newDuration)
 	{
@@ -497,27 +471,10 @@ public class LinkedList {
 
 		}
 	}
-	public String getOutput(){
-		return output;
-	}
-	public boolean isRepeated(Node checkNode)
-	{
-		Node startNode = head;
-		boolean found = false;
-		while(startNode != null)
-		{
-			if (startNode.name.equals(checkNode.name))
-			{
-				found = true;
-				break;
-			}
-			else
-			{
-				startNode = startNode.next;
-			}
-		}
-		return found;
-	}
+	
+	//================================================================================
+	// File report
+	//================================================================================	
 	
 public String alphabatized(LinkedList original)
 {
@@ -603,9 +560,28 @@ public String alphabatized(LinkedList original)
 	print();
 	return result;
 }
-	//DELETE
-	public void dupCount() {
-		
+
+public boolean isRepeated(Node checkNode)
+{
+	Node startNode = head;
+	boolean found = false;
+	while(startNode != null)
+	{
+		if (startNode.name.equals(checkNode.name))
+		{
+			found = true;
+			break;
+		}
+		else
+		{
+			startNode = startNode.next;
+		}
 	}
+	return found;
+}
+
+public String getOutput() {
+	return output;
+}
 	
 }
