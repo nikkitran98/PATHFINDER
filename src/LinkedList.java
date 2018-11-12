@@ -30,10 +30,12 @@ public class LinkedList {
 					/*if(temp.multiple == 1 && temp.rotate == 1 || temp.multiple == 0) {
 						if(temp.rotate == 1) {
 							temp.rotate = 0;*/
-							if(temp.multiple == 1 && temp.pcount == 1)
+							if(temp.multiple == 1 && temp.pcount <= 1)
 								temp.multiple = -1;
 							else if(temp.multiple == 1 && temp.pcount > 1)
 								temp.pcount = temp.pcount - 1;
+							else if(temp.multiple == 0 && temp.rotate == 1)
+								temp.multiple = -1;
 						//}
 						result = temp;
 						break;
@@ -163,11 +165,8 @@ public class LinkedList {
 			if(temp.multiple == 1 && temp.pcount == 0) {
 				temp.pcount = (end().pcount)/2;
 			}
-			else if(temp.multiple == 0 && end().pcount == 0) {
-				temp.multiple = 1;
-				temp.pcount = 1;
+			if(temp.end == 1 && temp.pcount == 0)
 				temp.rotate = 1;
-			}
 			temp = temp.next;
 		}
 		
