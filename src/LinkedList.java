@@ -1,4 +1,5 @@
 import java.util.*;
+import java.text.*;
 
 public class LinkedList {
 	//================================================================================
@@ -7,6 +8,7 @@ public class LinkedList {
 	private Node head;
 	private int count = 0;
 	private String cPath="";
+	private String output="";
 	//================================================================================
     // Constructor
     //================================================================================
@@ -17,8 +19,8 @@ public class LinkedList {
 	//================================================================================
     // Add
     //================================================================================
-	public void add(String name, String dependency, int duration) {
-		if(head.name == null) {										//checks to see if the linked list is empty
+	public void add(String name, String dependency, int duration) {	//method to add a new node
+		if(head.name.equals("")) {											//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
 		}
 		else {
@@ -35,6 +37,7 @@ public class LinkedList {
     // Restart
     //================================================================================
 	public void deleteList() {
+		output="";
 		head = new Node();
 	}
 
@@ -99,11 +102,23 @@ public class LinkedList {
 
 	public Node[][] process(Node[][] myArray, int rows, int columns) {
 		Node temp = head;
+		setRotate();
 		while(temp != null) {
 			updateCount(temp, temp);
+			setFork(temp);
 			temp = temp.next;
 		}
-
+		
+		temp = head;
+		while(temp != null) {
+			if(temp.multiple == 1 && temp.pcount == 0) {
+				temp.pcount = (end().pcount)/2;
+			}
+			if(temp.end == 1 && temp.pcount == 0)
+				temp.rotate = 1;
+			temp = temp.next;
+		}
+		
 		for(int r = 0; r < rows; r++) {
 			for(int c = 0; c < columns; c++) {
 				if(c == 0) {
@@ -111,10 +126,13 @@ public class LinkedList {
 				}
 				else
 					if((exists((myArray[r][c-1]).name)))
+					{
 						myArray[r][c] = getNext(myArray[r][c-1]);
-					else
+					}
+					else 
 						break;
 			}
+			System.out.println();
 		}
 		return myArray;
 	}
@@ -124,6 +142,7 @@ public class LinkedList {
 		int total =0;
 		String path = "";
 		String result = "";
+		String dateTime="";
 		ArrayList<Node> paths = new ArrayList<Node>();
 		Node temp;
 
@@ -151,7 +170,7 @@ public class LinkedList {
 
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\r\n";
 			pathNum++;
 		}
 		int maxDur = paths.get(0).getDuration();
@@ -163,6 +182,12 @@ public class LinkedList {
 				pathNum++;
 			}
 		}
+		//output="";
+		dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
+		output+="Created: "+dateTime+"\r\n";
+		output+="Paths and duration: \r\n"+result;
+		
+		//output+=
 		return result;
 	}
 
@@ -171,29 +196,28 @@ public class LinkedList {
     // Intermediate functions
     //================================================================================
 	public Node getEnd() {
-		Node result = new Node();
+		Node result = null;
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.pcount == 0) {
-					temp.end = -1;
-				}
-				else {
-					if(temp.multiple == 1 && temp.pcount == 0)
-						temp.multiple = -1;
-					else if(temp.multiple == 1 && temp.pcount > 0)
-						temp.pcount = temp.pcount - 1;
-				}
-				result = temp;
-				break;
+				if(temp.multiple == 1 && temp.pcount <= 1)
+					temp.multiple = -1;
+				else if(temp.multiple == 1 && temp.pcount > 1)
+					temp.pcount = temp.pcount - 1;
+				else if(temp.multiple == 0 && temp.rotate == 1)
+					temp.multiple = -1;
+			result = temp;
+			break;
 			}
 			temp = temp.next;
 		}
+		if(result == null)
+			result = new Node();
 		return result;
 	}
 
 	public Node getNext(Node nw) {
-		Node result = new Node();			//instantiates blank string
+		Node result = null;			//instantiates blank string
 		Node temp = head;			//sets a temp node equal to head
 		if((nw.name) == null) {
 			return result;
@@ -201,16 +225,28 @@ public class LinkedList {
 		else {
 			while(temp != null) {		//while temp is not null
 				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
-					if(temp.multiple == 1 && temp.pcount == 1)
-						temp.multiple = -1;
-					else if(temp.multiple == 1 && temp.pcount > 1)
-						temp.pcount = temp.pcount - 1;
-					result = temp;
-					break;
+					if(result == null) {
+						if(temp.multiple == 1 && temp.rotate == 1 || temp.multiple == 0) {
+							if(temp.rotate == 1) {
+								temp.rotate = 0;
+								if(temp.pcount == 1)
+									temp.multiple = -1;
+								else if (temp.pcount > 1)
+									temp.pcount = temp.pcount - 1;
+							}
+							result = temp;
+						}
+						else if(temp.rotate == 0)
+								temp.rotate = 1;
+					}
+					else if(temp.rotate == 0)
+						temp.rotate = 1;
 				}
-				temp = temp.next;
+			temp = temp.next;
 			}
 		}
+		if (result == null)
+			result = new Node();
 		return result;
 	}
 
@@ -238,17 +274,22 @@ public class LinkedList {
 	public void updateCount(Node current, Node nw) {
 		Node temp = head;
 		String name = nw.dependency;
-
-		while(temp.next != null) {
-			Node ntemp = temp.next;
-			while(ntemp != null) {
-				if((ntemp.name).equals(name) && (temp.name).equals(name)) {
-					current.pcount = (current.pcount) + 1;
-					updateCount(current, temp);
-					updateCount(current, ntemp);
+		
+		while(temp != null) {
+			if(temp.name.equals(name) && temp.multiple == 1 && nw.multiple == 1)
+			{
+				Node ntemp = temp.next;
+				while(ntemp != null) {
+					if(ntemp.name.equals(name)) {
+						current.pcount = current.pcount + 2;
+						updateCount(current, ntemp);
+						updateCount(current, temp);
+					}
+					ntemp = ntemp.next;
 				}
-				ntemp = ntemp.next;
 			}
+			else if(temp.name.equals(name))
+				updateCount(current,temp);
 			temp = temp.next;
 		}
 	}
@@ -284,7 +325,41 @@ public class LinkedList {
 			}
 		}
 	}
-
+	
+	public void setRotate() {
+		Node temp = head;
+		while(temp != null) {
+			if(temp.multiple == 1 && temp.end != 1) 
+				temp.rotate = 1;
+			temp = temp.next;
+		}
+	}
+	
+	public void setFork(Node node) {		//node should be a multiple
+		int fork = 0;
+		Node temp = head;
+		while(temp != null) {
+			if(temp.dependency.equals(node.name) && node.pcount > 0)
+				fork++;
+			temp = temp.next;
+		}
+		
+		if(fork > 1) {
+			node.pcount = node.pcount + fork;
+		}
+	}
+	
+	public Node end() {
+		Node result = new Node();
+		Node temp = head;
+		while(temp != null) {
+			if(temp.end == 1)
+				result = temp;
+			temp = temp.next;
+		}
+		return result;
+	}
+	
 	//================================================================================
     // Error checking
     //================================================================================
@@ -373,9 +448,11 @@ public class LinkedList {
 		}
 		return result;
 	}
+	
 	public String criticalPath(){
 		return cPath;
 	}
+	
 	public void changeDuration(String name, int newDuration)
 	{
 		Node temp = head;
@@ -387,4 +464,115 @@ public class LinkedList {
 
 		}
 	}
+	public String getOutput(){
+		return output;
+	}
+	public boolean isRepeated(Node checkNode)
+	{
+		Node startNode = head;
+		boolean found = false;
+		while(startNode != null)
+		{
+			if (startNode.name.equals(checkNode.name))
+			{
+				found = true;
+				break;
+			}
+			else
+			{
+				startNode = startNode.next;
+			}
+		}
+		return found;
+	}
+	
+public String alphabatized(LinkedList original)
+{
+
+	// setting up to add node
+	String result="";
+	//LinkedList alphabatizedLinkedList = new LinkedList();
+	Node current = head;
+	Node previous = head;
+	Node iterator = original.head;
+	// iterate through current linked list
+	// turn each node into a temp node
+	while(iterator!=null)
+	{
+		Node temp = new Node();
+		temp.name=iterator.getName();
+		temp.duration=iterator.getDuration();
+		//alphabatizedLinkedList.head;
+		if (isRepeated(temp))
+		{
+		// go to the next node in our current linked list
+		// do not add to our alphabatizedLinkedList
+			iterator=iterator.next;
+		}
+		// add to list in order
+		else
+		{
+			// If there are no node in the list
+			if (head.name.equals(""))
+			{
+				head = temp;
+				head.next = null;
+			}
+			// Adds if node needs to go in front of the 1st node
+			
+			else if ((head.name.compareTo(temp.name)) > 0)
+			{
+				temp.next = head;
+				head = temp;
+			}
+			// Adds in all other situations
+			else
+			{
+				current = head;
+				previous = head;
+				// Increment current
+				//current = current.next;
+				// Goes to end of linked list
+				while(current != null)
+				{
+					current = current.next;
+					// Adding if we are at the end of the list
+					if (current == null)
+					{
+						previous.next = temp;
+						temp.next = null;
+						break;
+					}
+					// Adds to the middle of the list
+					else if (current.name.compareTo(temp.name) > 0)
+					{
+						temp.next = current;
+						previous.next = temp;
+						break;
+					}
+					else
+					{
+						previous = previous.next;
+					}
+				}
+			}
+			iterator=iterator.next;
+		}
+		
+	}
+	Node temp2 = head;
+	result+="Activities in ALphabetic Order:\r\n";
+	while(temp2!=null)
+	{
+		result+= "Activity Name: "+temp2.name+"Duration: "+temp2.duration+"\r\n";
+		temp2=temp2.next;
+	}
+	print();
+	return result;
+}
+	//DELETE
+	public void dupCount() {
+		
+	}
+	
 }

@@ -1,0 +1,22 @@
+Title: hello
+Activities in ALphabetic Order:
+Activity Name: ADuration: 4
+Activity Name: BDuration: 4
+Activity Name: CDuration: 4
+Activity Name: DDuration: 4
+Activity Name: EDuration: 4
+Activity Name: FDuration: 4
+Activity Name: GDuration: 4
+Activity Name: HDuration: 4
+Activity Name: IDuration: 4
+Activity Name: JDuration: 4
+Created: 2018.11.11 21:11:35
+Paths and duration: 
+Path 1		A/B/C/E/J/G/I/       28
+Path 2		A/B/D/E/J/G/I/       28
+Path 3		A/F/C/E/J/G/I/       28
+Path 4		A/F/D/E/J/G/I/       28
+Path 5		A/B/C/E/H/I/       24
+Path 6		A/B/D/E/H/I/       24
+Path 7		A/F/C/E/H/I/       24
+Path 8		A/F/D/E/H/I/       24
