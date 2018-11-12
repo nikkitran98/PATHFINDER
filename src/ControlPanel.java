@@ -152,7 +152,12 @@ public class ControlPanel extends JPanel {
 					if(activityField.getText().isEmpty() || dependancyField.getText().isEmpty() || durationField.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Error: please make sure all fields are filled.");
 					} else {
-						list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
+						String[] depList = dependancyField.getText().split(",");
+						
+						for(int i = 0; i < depList.length; i++) {
+							list.add(activityField.getText(), depList[i], Integer.parseInt(durationField.getText()));
+						}
+						
 						count++;
 						activityField.setText("");
 						durationField.setText("");
@@ -209,8 +214,7 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
-				String s = "Critical Path(s)\t\t" + "Duration\n" +
-				list.criticalPath();
+				String s = "Critical Path(s)\t\t" + "Duration\n" + list.criticalPath();
 				output.setText(s);
 			}
 			else if (event.getSource() == changeButton) {
