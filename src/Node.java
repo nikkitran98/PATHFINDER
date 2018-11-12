@@ -13,7 +13,7 @@ public class Node {
     //================================================================================
 	public Node() {
 		next = null;
-		name = null;
+		name = "";
 		dependency = null;
 		duration = 0;
 		duplicate = 0;			//the case where two nodes have the same dependency

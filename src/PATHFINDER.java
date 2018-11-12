@@ -122,8 +122,12 @@ public class PATHFINDER extends JApplet {
 				FileWriter fw = new FileWriter (title+".txt");
 		        BufferedWriter bw = new BufferedWriter (fw);
 		        PrintWriter outFile = new PrintWriter (bw);
+		        
+		        String result="";
+		    	LinkedList alphabatizedLinkedList = new LinkedList();
+		    	
 		 
-		        output+= "Title: "+ title+"\r\n"+A.alphabatized()+A.getOutput();
+		        output+= "Title: "+ title+"\r\n"+alphabatizedLinkedList.alphabatized(A)+A.getOutput();
 		        
 		         outFile.print(output); 
 		        

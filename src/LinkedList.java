@@ -20,7 +20,7 @@ public class LinkedList {
     // Add
     //================================================================================
 	public void add(String name, String dependency, int duration) {	//method to add a new node
-		if(head.name == null) {											//checks to see if the linked list is empty
+		if(head.name.equals("")) {											//checks to see if the linked list is empty
 			head = new Node(name, dependency, duration);			//if it is empty, add it to the front
 		}
 		else {
@@ -114,11 +114,8 @@ public class LinkedList {
 			if(temp.multiple == 1 && temp.pcount == 0) {
 				temp.pcount = (end().pcount)/2;
 			}
-			else if(temp.multiple == 0 && end().pcount == 0) {
-				temp.multiple = 1;
-				temp.pcount = 1;
+			if(temp.end == 1 && temp.pcount == 0)
 				temp.rotate = 1;
-			}
 			temp = temp.next;
 		}
 		
@@ -203,14 +200,16 @@ public class LinkedList {
 		Node temp = head;
 		while(temp!= null) {
 			if(temp.end == 1 && temp.multiple != -1) {
-				if(temp.multiple == 1 && temp.pcount == 1)
+				if(temp.multiple == 1 && temp.pcount <= 1)
 					temp.multiple = -1;
 				else if(temp.multiple == 1 && temp.pcount > 1)
 					temp.pcount = temp.pcount - 1;
-				result = temp;
-				break;
+				else if(temp.multiple == 0 && temp.rotate == 1)
+					temp.multiple = -1;
+			result = temp;
+			break;
 			}
-		temp = temp.next;
+			temp = temp.next;
 		}
 		if(result == null)
 			result = new Node();
@@ -473,8 +472,7 @@ public class LinkedList {
 	{
 		Node startNode = head;
 		boolean found = false;
-		System.out.print(startNode.name);
-		while(startNode.name != null)
+		while(startNode != null)
 		{
 			if (startNode.name.equals(checkNode.name))
 			{
@@ -483,22 +481,21 @@ public class LinkedList {
 			}
 			else
 			{
-				if(startNode.next!=null)
 				startNode = startNode.next;
 			}
 		}
 		return found;
 	}
 	
-public String alphabatized()
+public String alphabatized(LinkedList original)
 {
 
 	// setting up to add node
 	String result="";
-	LinkedList alphabatizedLinkedList = new LinkedList();
-	Node current = alphabatizedLinkedList.head;
-	Node previous = alphabatizedLinkedList.head;
-	Node iterator = head;
+	//LinkedList alphabatizedLinkedList = new LinkedList();
+	Node current = head;
+	Node previous = head;
+	Node iterator = original.head;
 	// iterate through current linked list
 	// turn each node into a temp node
 	while(iterator!=null)
@@ -507,7 +504,7 @@ public String alphabatized()
 		temp.name=iterator.getName();
 		temp.duration=iterator.getDuration();
 		//alphabatizedLinkedList.head;
-		if (alphabatizedLinkedList.isRepeated(temp))
+		if (isRepeated(temp))
 		{
 		// go to the next node in our current linked list
 		// do not add to our alphabatizedLinkedList
@@ -517,59 +514,61 @@ public String alphabatized()
 		else
 		{
 			// If there are no node in the list
-			System.out.print(alphabatizedLinkedList.head.name+"\n");
-			System.out.print(temp.name+"\n");
-			if (alphabatizedLinkedList.head == null)
+			if (head.name.equals(""))
 			{
-				alphabatizedLinkedList.head = temp;
-				alphabatizedLinkedList.head.next = null;
+				head = temp;
+				head.next = null;
 			}
 			// Adds if node needs to go in front of the 1st node
 			
-			else if ((alphabatizedLinkedList.head.name.compareTo(temp.name)) > 0)
+			else if ((head.name.compareTo(temp.name)) > 0)
 			{
-				temp.next = alphabatizedLinkedList.head;
-				alphabatizedLinkedList.head = temp;
+				temp.next = head;
+				head = temp;
 			}
 			// Adds in all other situations
 			else
 			{
+				current = head;
+				previous = head;
 				// Increment current
-				current = current.next;
+				//current = current.next;
 				// Goes to end of linked list
-				while(current.next != null)
+				while(current != null)
 				{
+					current = current.next;
 					// Adding if we are at the end of the list
-					if (current.next == null && current.name.compareTo(temp.name) < 0)
+					if (current == null)
 					{
-						current.next = temp;
+						previous.next = temp;
 						temp.next = null;
+						break;
 					}
 					// Adds to the middle of the list
 					else if (current.name.compareTo(temp.name) > 0)
 					{
 						temp.next = current;
 						previous.next = temp;
+						break;
 					}
 					else
 					{
 						previous = previous.next;
-						current = current.next;
 					}
 				}
-				iterator=iterator.next;
 			}
+			iterator=iterator.next;
 		}
 		
 	}
-	Node temp2 = alphabatizedLinkedList.head;
+	Node temp2 = head;
 	result+="Activities in ALphabetic Order:\r\n";
 	while(temp2!=null)
 	{
 		result+= "Activity Name: "+temp2.name+"Duration: "+temp2.duration+"\r\n";
 		temp2=temp2.next;
 	}
-	alphabatizedLinkedList.print();
+	print();
 	return result;
 }
 	//DELETE
