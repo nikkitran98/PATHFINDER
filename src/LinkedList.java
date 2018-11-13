@@ -186,9 +186,10 @@ public class LinkedList {
 			}
 		}
 		//output="";
-		dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
-		output+="Created: "+dateTime+"\r\n";
-		output+="Paths and duration: \r\n"+result;
+		//dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
+		//output+="Created: "+dateTime+"\r\n";
+		output="";
+		output+="Paths and Duration: \r\n"+result;
 		
 		//output+=
 		return result;
@@ -554,10 +555,11 @@ public String alphabatized(LinkedList original)
 	result+="Activities in ALphabetic Order:\r\n";
 	while(temp2!=null)
 	{
-		result+= "Activity Name: "+temp2.name+"Duration: "+temp2.duration+"\r\n";
+		result+= "Activity Name: "+temp2.name+" Duration: "+temp2.duration+"\r\n";
 		temp2=temp2.next;
 	}
-	print();
+	result+="\r\n\r\n";
+	//print();
 	return result;
 }
 

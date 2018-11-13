@@ -1,0 +1,14 @@
+Title: Report 1
+
+Created: 11.13.2018 12:31:15
+
+Activities in ALphabetic Order:
+Activity Name: A Duration: 1
+Activity Name: B Duration: 1
+Activity Name: C Duration: 1
+Activity Name: D Duration: 1
+
+
+Paths and Duration: 
+Path 1		A/B/D/			3
+Path 2		A/C/D/			3

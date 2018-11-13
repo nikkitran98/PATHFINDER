@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.event.*;
 
@@ -233,7 +235,8 @@ public class ControlPanel extends JPanel {
 			else if (event.getSource() == reportButton) {
 				String title = "";
 				String output="";
-				
+				String dateTime="";
+				dateTime= new SimpleDateFormat("MM.dd.yyyy HH:mm:ss").format(new Date());
 				title = JOptionPane.showInputDialog("Name of the report:", JOptionPane.OK_CANCEL_OPTION);
 				
 				try {
@@ -244,7 +247,7 @@ public class ControlPanel extends JPanel {
 		    	LinkedList alphabatizedLinkedList = new LinkedList();
 		    	
 		 
-		        output+= "Title: "+ title+"\r\n"+alphabatizedLinkedList.alphabatized(list)+list.getOutput();
+		        output+= "Title: "+ title+"\r\n\r\n"+"Created: "+dateTime+"\r\n\r\n"+alphabatizedLinkedList.alphabatized(list)+list.getOutput();
 		        outFile.print(output); 
 		        outFile.close();
 				
