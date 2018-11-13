@@ -140,13 +140,13 @@ public class PATHFINDER extends JApplet {
 				String output="";
 				try {
 				InputStreamReader isr = new InputStreamReader (System.in);
-			    BufferedReader stdin = new BufferedReader (isr);
+			    BufferedReader br = new BufferedReader (isr);
 				
 				System.out.print("Please enter title for output file");
-		        title= stdin.readLine().trim();
+		        title= br.readLine().trim();
 				FileWriter fw = new FileWriter (title+".txt");
 		        BufferedWriter bw = new BufferedWriter (fw);
-		        PrintWriter outFile = new PrintWriter (bw);
+		        PrintWriter pw = new PrintWriter (bw);
 		        
 		        String result="";
 		    	LinkedList alphabatizedLinkedList = new LinkedList();
@@ -154,10 +154,10 @@ public class PATHFINDER extends JApplet {
 		 
 		        output+= "Title: "+ title+"\r\n"+alphabatizedLinkedList.alphabatized(A)+A.getOutput();
 		        
-		        outFile.print(output); 
+		        pw.print(output); 
 		        
 
-		        outFile.close();
+		        pw.close();
 				
 				}
 				catch(IOException e)

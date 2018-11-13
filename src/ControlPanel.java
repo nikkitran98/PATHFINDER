@@ -242,14 +242,14 @@ public class ControlPanel extends JPanel {
 				try {
 				FileWriter fw = new FileWriter (title+".txt");
 		        BufferedWriter bw = new BufferedWriter (fw);
-		        PrintWriter outFile = new PrintWriter (bw);
+		        PrintWriter pw = new PrintWriter (bw);
 		        
 		    	LinkedList alphabatizedLinkedList = new LinkedList();
 		    	
 		 
 		        output+= "Title: "+ title+"\r\n\r\n"+"Created: "+dateTime+"\r\n\r\n"+alphabatizedLinkedList.alphabatized(list)+list.getOutput();
-		        outFile.print(output); 
-		        outFile.close();
+		        pw.print(output); 
+		        pw.close();
 				
 				} catch(IOException e) {
 					e.printStackTrace();
@@ -260,13 +260,15 @@ public class ControlPanel extends JPanel {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
 						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
 						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “0”. \n" +
-						"If there are more than one dependencies, add them separately.\n" +
-						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
-						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 
-						"Process: Processes the possibly paths and the time to complete the entire path. \n" + 
-						"Restart: Discards all of the previous paths, allowing you to start a new network diagram.\n" + 
-						"?: Help section; you are currently here\n" + 
-						"A: Defines the purpose of the program";
+						"If there are more than one dependencies, seperate them with a “,”.\n" +
+						"Add: Uses the data fields name, duration, and dependency to add an entry to the path.\n" + 
+						"Process: Processes the possible paths and the time to complete each path. \n" + 
+						"Restart: Discards all of the previous paths and activities, allowing you to start a new network diagram.\n" + 
+						"?: Help section. You are currently here.\n" + 
+						"A: Defines the purpose of the program.\n"+
+						"Display crtical path: Output critical path(s).\n"+
+						"Change duration: Change duration of an activity.\n"+
+						"Creat report: Create text file containing network diagram information with given title.";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (event.getSource() == aboutButton) {
