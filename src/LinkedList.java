@@ -69,7 +69,7 @@ public class LinkedList {
 					if((temp2.dependency).equals(temp.name))//checks dependency versus name
 						break;
 					// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
-					else if (temp2.name.equals(temp.name)/*&&temp2.dependency.equals(temp.dependency)*/) {
+					else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
 						temp.end=1;
 					}
 					else {
