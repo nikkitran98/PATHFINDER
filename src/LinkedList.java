@@ -37,7 +37,7 @@ public class LinkedList {
     // Restart
     //================================================================================
 	public void deleteList() {
-		output="";
+		
 		head = new Node();
 	}
 
@@ -576,5 +576,17 @@ public boolean isRepeated(Node checkNode)
 public String getOutput() {
 	return output;
 }
-	
+public void resetFLag()
+{
+	Node temp = head;
+	while(temp!=null)
+{
+		temp.duplicate = 0;
+		temp.multiple = 0;
+		temp.pcount = 0;
+		temp.mCount = 0;
+		temp.rotate = 0;
+		temp=temp.next;
+}
+}
 }

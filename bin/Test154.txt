@@ -1,0 +1,13 @@
+Title: Test154
+
+Created: 11.14.2018 01:54:51
+
+Activities in ALphabetic Order:
+Activity Name: A Duration: 1
+Activity Name: B Duration: 1
+Activity Name: C Duration: 1
+Activity Name: D Duration: 2
+
+
+Paths and Duration: 
+Path 1		A/B/C/D/			5

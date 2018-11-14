@@ -191,6 +191,7 @@ public class ControlPanel extends JPanel {
 					}
 					else {
 						String s = "Paths\t\t" + "Path Dependencies\t\t" + "Duration\n";
+						list.resetFLag();
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];

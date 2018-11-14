@@ -1,0 +1,23 @@
+Title: Test1247
+
+Created: 11.14.2018 00:47:29
+
+Activities in ALphabetic Order:
+Activity Name: A Duration: 1
+Activity Name: B Duration: 1
+Activity Name: C Duration: 1
+Activity Name: D Duration: 1
+Activity Name: E Duration: 1
+Activity Name: F Duration: 1
+Activity Name: G Duration: 1
+Activity Name: H Duration: 1
+Activity Name: I Duration: 10
+Activity Name: J Duration: 1
+
+
+Paths and Duration: 
+Path 1		A/D/I/J/			13
+Path 2		A/B/F/H/J/			5
+Path 3		J/			1
+Path 4		J/			1
+Path 5		J/			1

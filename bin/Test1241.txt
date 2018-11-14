@@ -1,0 +1,14 @@
+Title: Test1241
+
+Created: 11.14.2018 00:41:16
+
+Activities in ALphabetic Order:
+Activity Name: E Duration: 1
+Activity Name: F Duration: 2
+Activity Name: G Duration: 1
+Activity Name: H Duration: 1
+
+
+Paths and Duration: 
+Path 1		E/F/H/			4
+Path 2		E/G/H/			3
