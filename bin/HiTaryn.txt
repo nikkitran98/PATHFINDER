@@ -1,0 +1,14 @@
+Title: HiTaryn
+
+Created: 11.13.2018 15:55:48
+
+Activities in ALphabetic Order:
+Activity Name: A Duration: 1
+Activity Name: B Duration: 2
+Activity Name: C Duration: 1
+Activity Name: D Duration: 1
+
+
+Paths and Duration: 
+Path 1		A/B/D/			4
+Path 2		A/C/D/			3

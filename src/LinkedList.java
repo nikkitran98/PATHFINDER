@@ -66,20 +66,20 @@ public class LinkedList {
 
 		for(int i =0;i<count;i++) {
 			for(int j=0;j<count;j++) {
-				if((temp2.dependency).equals(temp.name))//checks dependency versus name
-					break;
-				// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
-				else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
-					temp.end=1;
-				}
-				else {
-				    if(temp2.next==null)
-				    	temp2=head;
-				    else
-				    	temp2=temp2.next;
-				}
-				if(temp.end == 1)
-					break;
+					if((temp2.dependency).equals(temp.name))//checks dependency versus name
+						break;
+					// meaning it looped around to temp without finding a match therefore it is an endpoint. dont return yet incase of clone
+					else if (temp2.name.equals(temp.name)&&temp2.dependency.equals(temp.dependency)) {
+						temp.end=1;
+					}
+					else {
+					    if(temp2.next==null)
+					    	temp2=head;
+					    else
+					    	temp2=temp2.next;
+					}
+					if(temp.end == 1)
+						break;
 			}
 
 			if(temp.end == 1) {
@@ -89,10 +89,12 @@ public class LinkedList {
 						change.end = 1;
 					change = change.next;
 				}
-				break;
+				
 			}
 			if(temp.next!=null)
 			temp=temp.next;
+			else
+			temp= head;
 			if(temp.next!=null)
 			temp2=temp.next;
 			else
@@ -129,7 +131,6 @@ public class LinkedList {
 					else 
 						break;
 			}
-			System.out.println();
 		}
 		return myArray;
 	}
@@ -161,13 +162,14 @@ public class LinkedList {
 				}
 			temp= new Node(path, "", time);
 			paths.add(temp);
+			count--;
 			total++;
 		}
 		order(paths,total);
 
 		int pathNum = 1;
 		for(int i =0;i<total;i++) {
-			result += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\r\n";
+			result += "Path " + pathNum + "\t\t" + paths.get(i).getName()+"\t\t\t"+paths.get(i).getDuration()+"\r\n";
 			pathNum++;
 		}
 		int maxDur = paths.get(0).getDuration();
@@ -175,14 +177,15 @@ public class LinkedList {
 		cPath = "";
 		for(int i =0;i<total;i++) {
 			if( paths.get(i).getDuration()==maxDur){
-				cPath += "Path " + pathNum + "		" + paths.get(i).getName()+"       "+paths.get(i).getDuration()+"\n";
+				cPath += paths.get(i).getName()+"\t\t"+paths.get(i).getDuration()+"\n";
 				pathNum++;
 			}
 		}
 		//output="";
-		dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
-		output+="Created: "+dateTime+"\r\n";
-		output+="Paths and duration: \r\n"+result;
+		//dateTime= new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
+		//output+="Created: "+dateTime+"\r\n";
+		output="";
+		output+="Paths and Duration: \r\n"+result;
 		
 		//output+=
 		return result;
@@ -366,7 +369,7 @@ public class LinkedList {
 		// nodes must depend on it assuming it is the starter node
 		while(temp != null) {
 			// check if it depends on nothing first
-			if (temp.dependency == "0") {
+			if (temp.dependency.equals("0")) {
 				// if so, checks to see if something depends on it
 				result = isDependedOn(temp.name);
 				if(result == false)
@@ -375,34 +378,29 @@ public class LinkedList {
 			temp = temp.next;
 		}
 
-		// test case 2: a node must depend on something and something
-		// must depend on it
 
 		// test case 2: there cannot be multiple ends or else it's
 		// not fully connected
-
-//		if(result) {
-//			temp = head;
-//			while(temp != null) {
-//				if (exists(temp.dependency) && dependent(temp.name))
-//					result = true;
-//				if(result == false)
-//					break;
-//				else
-//					temp = temp.next;
-//			}
-//
-//		}
-
+		
+		int extras = 0;
 		if(result) {
 			temp = head;
-			findEnd();
 			while(temp != null) {
 				if (temp.end == 1) {
 					endCount++;
+					// check to see if there any nodes with the same names
+					// and discount the extras
+					Node temp2 = temp.next;
+					while (temp2 != null) {
+						if (temp.name.equals(temp2.name))
+							extras++;
+						temp2 = temp2.next;
+					}
 				}
 				temp = temp.next;
 			}
+			endCount = endCount - extras;
+			
 			// checks to see if there are multiple ends
 			if (endCount > 1) {
 				result = false;
@@ -410,6 +408,7 @@ public class LinkedList {
 			else
 				result = true;
 		}
+		
 		return result;
 	}
 
@@ -431,7 +430,6 @@ public class LinkedList {
 	public boolean endExists() {
 		boolean result = false;
 		Node temp = head;
-		findEnd();
 		while(temp != null) {
 			if(temp.end == 1) {
 				result = true;
@@ -442,9 +440,17 @@ public class LinkedList {
 		return result;
 	}
 	
+	//================================================================================
+	// Display Critical Path
+	//================================================================================		
+	
 	public String criticalPath(){
 		return cPath;
 	}
+	
+	//================================================================================
+	// Change Duration
+	//================================================================================	
 	
 	public void changeDuration(String name, int newDuration)
 	{
@@ -457,27 +463,10 @@ public class LinkedList {
 
 		}
 	}
-	public String getOutput(){
-		return output;
-	}
-	public boolean isRepeated(Node checkNode)
-	{
-		Node startNode = head;
-		boolean found = false;
-		while(startNode != null)
-		{
-			if (startNode.name.equals(checkNode.name))
-			{
-				found = true;
-				break;
-			}
-			else
-			{
-				startNode = startNode.next;
-			}
-		}
-		return found;
-	}
+	
+	//================================================================================
+	// File report
+	//================================================================================	
 	
 public String alphabatized(LinkedList original)
 {
@@ -557,15 +546,35 @@ public String alphabatized(LinkedList original)
 	result+="Activities in ALphabetic Order:\r\n";
 	while(temp2!=null)
 	{
-		result+= "Activity Name: "+temp2.name+"Duration: "+temp2.duration+"\r\n";
+		result+= "Activity Name: "+temp2.name+" Duration: "+temp2.duration+"\r\n";
 		temp2=temp2.next;
 	}
-	print();
+	result+="\r\n\r\n";
+	//print();
 	return result;
 }
-	//DELETE
-	public void dupCount() {
-		
+
+public boolean isRepeated(Node checkNode)
+{
+	Node startNode = head;
+	boolean found = false;
+	while(startNode != null)
+	{
+		if (startNode.name.equals(checkNode.name))
+		{
+			found = true;
+			break;
+		}
+		else
+		{
+			startNode = startNode.next;
+		}
 	}
+	return found;
+}
+
+public String getOutput() {
+	return output;
+}
 	
 }

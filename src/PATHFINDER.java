@@ -77,19 +77,42 @@ public class PATHFINDER extends JApplet {
 				System.out.println("duration changed");
 				break;	
 			case 'C':
-				A.multCount();
-				A.findEnd();
-				
-				Node[][] myArray = new Node[count][count];
-				for(int r = 0; r < count; r++) {
-					for(int c = 0; c < count; c++) {
-						myArray[r][c] = null;
+				try {
+					A.findEnd();
+					
+					if(!A.endExists()) {
+						String message = "There cannot be a cycle. Deleting network diagram...";
+						System.out.println(message);
+						A.deleteList();
+					}
+					else if(!A.isConnected()) {
+						String message = "All nodes must be connected. Deleting network diagram...";
+						System.out.println(message);
+						A.deleteList();
+					}
+					else {
+						String s = "Paths\t\t" + "Path Dependencies\t\t" + "Duration\n";
+						A.multCount();
+						A.findEnd();
+						Node[][] myArray = new Node[count][count];
+						for(int r = 0; r < count; r++) {
+							for(int c = 0; c < count; c++) {
+								myArray[r][c] = null;
+							}
+						}
+						
+						Node[][] newArray = new Node[count][count];
+						newArray = A.process(myArray, count, count);
+						
+						String result = A.makePath(newArray, count, count);
+		   	
+						s += result;
+						System.out.println(s);
 					}
 				}
-				
-				Node[][] newArray = new Node[count][count];
-				newArray = A.process(myArray, count, count);
-				System.out.println(A.makePath(newArray, count, count));
+				catch (NumberFormatException e) {
+					System.out.println("Error, please try again.");
+				}
 				break;
 				
 			case 'D':
@@ -103,6 +126,8 @@ public class PATHFINDER extends JApplet {
 				break;
 				
 			case 'O':
+				A.findEnd();
+				A.print();
 				break;
 			case'P':
 				System.out.print(A.criticalPath());
@@ -115,13 +140,13 @@ public class PATHFINDER extends JApplet {
 				String output="";
 				try {
 				InputStreamReader isr = new InputStreamReader (System.in);
-			    BufferedReader stdin = new BufferedReader (isr);
+			    BufferedReader br = new BufferedReader (isr);
 				
 				System.out.print("Please enter title for output file");
-		        title= stdin.readLine().trim();
+		        title= br.readLine().trim();
 				FileWriter fw = new FileWriter (title+".txt");
 		        BufferedWriter bw = new BufferedWriter (fw);
-		        PrintWriter outFile = new PrintWriter (bw);
+		        PrintWriter pw = new PrintWriter (bw);
 		        
 		        String result="";
 		    	LinkedList alphabatizedLinkedList = new LinkedList();
@@ -129,10 +154,10 @@ public class PATHFINDER extends JApplet {
 		 
 		        output+= "Title: "+ title+"\r\n"+alphabatizedLinkedList.alphabatized(A)+A.getOutput();
 		        
-		         outFile.print(output); 
+		        pw.print(output); 
 		        
 
-		        outFile.close();
+		        pw.close();
 				
 				}
 				catch(IOException e)

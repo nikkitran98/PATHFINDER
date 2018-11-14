@@ -1,6 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.event.*;
 
 public class ControlPanel extends JPanel {
@@ -8,8 +17,8 @@ public class ControlPanel extends JPanel {
 	//================================================================================
     // Properties
     //================================================================================
-	private JPanel topPanel, top1, top2, top3, activityPanel, durationPanel, dependancyPanel, bottomPanel, bottom1, bottom2;
-	private JLabel activityLabel, durationLabel, dependancyLabel, outputPath, outputDependancy, outputDuration;
+	private JPanel topPanel, top1, top2, top3, activityPanel, durationPanel, dependancyPanel, bottomPanel;
+	private JLabel activityLabel, durationLabel, dependancyLabel;
 	private JTextField activityField, durationField, dependancyField;
 	private JButton addButton, restartButton, processButton;
 	private JButton helpButton, aboutButton;
@@ -43,17 +52,13 @@ public class ControlPanel extends JPanel {
 		durationPanel = new JPanel();
 		dependancyPanel = new JPanel();
 		bottomPanel = new JPanel();
-		bottom1 = new JPanel();
-		bottom2 = new JPanel();
 		
 		activityLabel = new JLabel("Activity Name: ");
 		durationLabel = new JLabel("Activity Duration: ");
 		dependancyLabel = new JLabel("Activity Dependencies: ");
-		outputPath = new JLabel("Paths");
-		outputDependancy = new JLabel("Path Dependencies");
-		outputDuration = new JLabel("Duration");
 		
-		output = new JTextArea (30,30);
+		output = new JTextArea (15,56);
+		
 		scrollPane= new JScrollPane(output);
 		
 		activityField = new JTextField();
@@ -103,16 +108,7 @@ public class ControlPanel extends JPanel {
 		topPanel.add(top2);
 		topPanel.add(top3);
 		
-		bottom1.setLayout(new GridLayout(1,3));
-		bottom1.add(outputPath);
-		bottom1.add(outputDependancy);
-		bottom1.add(outputDuration);
-		
-		bottom2.add(scrollPane);
-		
-		bottomPanel.setLayout(new GridLayout(2,1));
-		bottomPanel.add(bottom1);
-		bottomPanel.add(bottom2);
+		bottomPanel.add(scrollPane);
 		
 		addButton.addActionListener(buttonlistener);
 		restartButton.addActionListener(buttonlistener);
@@ -158,7 +154,12 @@ public class ControlPanel extends JPanel {
 					if(activityField.getText().isEmpty() || dependancyField.getText().isEmpty() || durationField.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Error: please make sure all fields are filled.");
 					} else {
-						list.add(activityField.getText(), dependancyField.getText(), Integer.parseInt(durationField.getText()));
+						String[] depList = dependancyField.getText().split(",");
+						
+						for(int i = 0; i < depList.length; i++) {
+							list.add(activityField.getText(), depList[i], Integer.parseInt(durationField.getText()));
+						}
+						
 						count++;
 						activityField.setText("");
 						durationField.setText("");
@@ -176,18 +177,20 @@ public class ControlPanel extends JPanel {
 			}
 			else if (event.getSource() == processButton) {
 				try {
-					if(!list.isConnected()) {
-						String message = "All nodes must be connected. Deleting network diagram...";
-						JOptionPane.showMessageDialog(null, message);
-						list.deleteList();
-					}
+					list.findEnd();
+					
 					if(!list.endExists()) {
 						String message = "There cannot be a cycle. Deleting network diagram...";
 						JOptionPane.showMessageDialog(null, message);
 						list.deleteList();
 					}
+					else if(!list.isConnected()) {
+						String message = "All nodes must be connected. Deleting network diagram...";
+						JOptionPane.showMessageDialog(null, message);
+						list.deleteList();
+					}
 					else {
-						//list.dupCount();
+						String s = "Paths\t\t" + "Path Dependencies\t\t" + "Duration\n";
 						list.multCount();
 						list.findEnd();
 						Node[][] myArray = new Node[count][count];
@@ -202,9 +205,8 @@ public class ControlPanel extends JPanel {
 						
 						String result = list.makePath(newArray, count, count);
 		   	
-						// TODO(Nikki): if more than one path is critical, all paths are displayed
-						// otherwise, paths that are not critical should not be displayed
-		       	 		output.setText(result);
+						s += result;
+		       	 		output.setText(s);
 					}
 				}
 				catch (NumberFormatException e) {
@@ -214,25 +216,59 @@ public class ControlPanel extends JPanel {
 				
 			}
 			else if (event.getSource() == criticalButton) {
-				// TODO
+				String s = "Critical Path(s)\t\t" + "Duration\n" + list.criticalPath();
+				output.setText(s);
 			}
 			else if (event.getSource() == changeButton) {
-				// TODO
+				JTextField field1 = new JTextField();
+				JTextField field2 = new JTextField();
+				
+				Object[] fields = {
+						"Enter activity to be changed:", field1,
+						"Duration:", field2
+				};
+				
+				JOptionPane.showConfirmDialog(null, fields, "", JOptionPane.OK_CANCEL_OPTION);
+				
+				list.changeDuration(field1.getText(), Integer.parseInt(field2.getText()));
 			}
 			else if (event.getSource() == reportButton) {
-				// TODO
+				String title = "";
+				String output="";
+				String dateTime="";
+				dateTime= new SimpleDateFormat("MM.dd.yyyy HH:mm:ss").format(new Date());
+				title = JOptionPane.showInputDialog("Name of the report:", JOptionPane.OK_CANCEL_OPTION);
+				
+				try {
+				FileWriter fw = new FileWriter (title+".txt");
+		        BufferedWriter bw = new BufferedWriter (fw);
+		        PrintWriter pw = new PrintWriter (bw);
+		        
+		    	LinkedList alphabatizedLinkedList = new LinkedList();
+		    	
+		 
+		        output+= "Title: "+ title+"\r\n\r\n"+"Created: "+dateTime+"\r\n\r\n"+alphabatizedLinkedList.alphabatized(list)+list.getOutput();
+		        pw.print(output); 
+		        pw.close();
+				
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
+				
 			}
 			else if (event.getSource() == helpButton) {
 				String message = "Activity Name: Enter the name of activity in corresponding text field.\n" + 
 						"Activity Duration: Enter amount of time it takes to complete the activity in the corresponding text field.\n" + 
 						"Activity Dependencies: Enter the activities that must be completed before you can start the activity being entered. If there are none, enter “0”. \n" +
-						"If there are more than one dependencies, add them separately.\n" +
-						"Add: Use the data fields name, duration, and dependency to add an entry to the path.\n" + 
-						"Delete: Deletes the entry that matches the current information in the activity name data field.\n" + 
-						"Process: Processes the possibly paths and the time to complete the entire path. \n" + 
-						"Restart: Discards all of the previous paths, allowing you to start a new network diagram.\n" + 
-						"?: Help section; you are currently here\n" + 
-						"A: Defines the purpose of the program";
+						"If there are more than one dependencies, seperate them with a “,”.\n" +
+						"Add: Uses the data fields name, duration, and dependency to add an entry to the path.\n" + 
+						"Process: Processes the possible paths and the time to complete each path. \n" + 
+						"Restart: Discards all of the previous paths and activities, allowing you to start a new network diagram.\n" + 
+						"?: Help section. You are currently here.\n" + 
+						"A: Defines the purpose of the program.\n"+
+						"Display crtical path: Output critical path(s).\n"+
+						"Change duration: Change duration of an activity.\n"+
+						"Creat report: Create text file containing network diagram information with given title.";
 				JOptionPane.showMessageDialog(null, message);
 			}
 			else if (event.getSource() == aboutButton) {
