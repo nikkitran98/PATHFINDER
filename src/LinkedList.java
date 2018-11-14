@@ -111,9 +111,6 @@ public class LinkedList {
 		
 		temp = head;
 		while(temp != null) {
-			if(temp.multiple == 1 && temp.pcount == 0) {
-				temp.pcount = (end().pcount)/2;
-			}
 			if(temp.end == 1 && temp.pcount == 0)
 				temp.rotate = 1;
 			temp = temp.next;
@@ -226,21 +223,21 @@ public class LinkedList {
 			while(temp != null) {		//while temp is not null
 				if((nw.dependency).equals(temp.name) && temp.multiple != -1) {		//if the dependency at that node is equal to nw
 					if(result == null) {
-						if(temp.multiple == 1 && temp.rotate == 1 || temp.multiple == 0) {
-							if(temp.rotate == 1) {
-								temp.rotate = 0;
-								if(temp.pcount == 1)
-									temp.multiple = -1;
-								else if (temp.pcount > 1)
-									temp.pcount = temp.pcount - 1;
-							}
+						if(temp.multiple == 1 && temp.rotate == temp.mCount - 1 || temp.multiple == 0) {
+							temp.rotate = temp.rotate - 1;
+							if(temp.pcount == 1)
+								temp.multiple = -1;
+							else if (temp.pcount > 1)
+								temp.pcount = temp.pcount - 1;
 							result = temp;
 						}
 						else if(temp.rotate == 0)
-								temp.rotate = 1;
+							temp.rotate = temp.mCount - 1;
+						else if(temp.rotate < temp.mCount - 1)
+							temp.rotate = temp.rotate - 1;
 					}
 					else if(temp.rotate == 0)
-						temp.rotate = 1;
+						temp.rotate = temp.mCount - 1;
 				}
 			temp = temp.next;
 			}
@@ -272,24 +269,18 @@ public class LinkedList {
 	}
 
 	public void updateCount(Node current, Node nw) {
+
 		Node temp = head;
 		String name = nw.dependency;
 		
 		while(temp != null) {
 			if(temp.name.equals(name) && temp.multiple == 1 && nw.multiple == 1)
 			{
-				Node ntemp = temp.next;
-				while(ntemp != null) {
-					if(ntemp.name.equals(name)) {
-						current.pcount = current.pcount + 2;
-						updateCount(current, ntemp);
-						updateCount(current, temp);
-					}
-					ntemp = ntemp.next;
-				}
+				current.pcount = current.pcount + 1;
+				updateCount(current, temp);
 			}
 			else if(temp.name.equals(name))
-				updateCount(current,temp);
+				updateCount(current, temp);
 			temp = temp.next;
 		}
 	}
@@ -330,7 +321,19 @@ public class LinkedList {
 		Node temp = head;
 		while(temp != null) {
 			if(temp.multiple == 1 && temp.end != 1) 
-				temp.rotate = 1;
+			{
+				temp.mCount = temp.mCount + 1;
+				Node ntemp = head;
+				while(ntemp != null){
+					if(ntemp != temp){
+						if(ntemp.multiple == 1 && ntemp.end != 1 && temp.name.equals(ntemp.name)){
+							temp.mCount = temp.mCount + 1;
+							temp.rotate = temp.rotate + 1;
+						}
+					}
+					ntemp = ntemp.next;
+				}
+			}
 			temp = temp.next;
 		}
 	}
@@ -347,17 +350,6 @@ public class LinkedList {
 		if(fork > 1) {
 			node.pcount = node.pcount + fork;
 		}
-	}
-	
-	public Node end() {
-		Node result = new Node();
-		Node temp = head;
-		while(temp != null) {
-			if(temp.end == 1)
-				result = temp;
-			temp = temp.next;
-		}
-		return result;
 	}
 	
 	//================================================================================
